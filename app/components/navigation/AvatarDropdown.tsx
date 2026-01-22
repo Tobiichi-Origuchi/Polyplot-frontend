@@ -63,9 +63,9 @@ export default function AvatarDropdown({ isOpen, onClose, onLogout }: AvatarDrop
       {/* Positions */}
       <button
         onClick={handlePositionsClick}
-        className="w-full flex items-center gap-3 px-4 py-3 text-text-primary hover:bg-bg-secondary transition-colors"
+        className="w-full flex items-center gap-3 px-4 py-3 text-text-primary hover:bg-long hover:text-black transition-colors group"
       >
-        <Briefcase size={20} className="text-text-secondary" />
+        <Briefcase size={20} className="text-text-secondary group-hover:text-black transition-colors" />
         <span className="font-semibold">Positions</span>
       </button>
 
@@ -81,18 +81,18 @@ export default function AvatarDropdown({ isOpen, onClose, onLogout }: AvatarDrop
       {/* Official Docs */}
       <button
         onClick={handleDocsClick}
-        className="w-full flex items-center gap-3 px-4 py-3 text-text-primary hover:bg-bg-secondary transition-colors"
+        className="w-full flex items-center gap-3 px-4 py-3 text-text-primary hover:bg-long hover:text-black transition-colors group"
       >
-        <FileText size={20} className="text-text-secondary" />
+        <FileText size={20} className="text-text-secondary group-hover:text-black transition-colors" />
         <span className="font-semibold">Official Docs</span>
       </button>
 
       {/* Log Out */}
       <button
         onClick={handleLogoutClick}
-        className="w-full flex items-center gap-3 px-4 py-3 text-text-primary hover:bg-bg-secondary transition-colors"
+        className="w-full flex items-center gap-3 px-4 py-3 text-text-primary hover:bg-long hover:text-black transition-colors group"
       >
-        <LogOut size={20} className="text-red-500" />
+        <LogOut size={20} className="text-red-500 group-hover:text-black transition-colors" />
         <span className="font-semibold">Log Out</span>
       </button>
     </div>
