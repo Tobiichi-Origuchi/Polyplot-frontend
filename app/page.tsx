@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import CategoryFilter from './components/home/CategoryFilter';
+import AIInsightButton from './components/home/AIInsightButton';
 import NarrativeCard, { NarrativeCardProps } from './components/home/NarrativeCard';
 
 // 模拟市场数据
@@ -205,15 +206,25 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Category Filter */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-text-primary mb-4">
-            Explore Narratives
-          </h2>
-          <CategoryFilter
-            onCategoryChange={handleCategoryChange}
-            defaultCategory="all"
-          />
+        {/* Title */}
+        <h2 className="text-2xl font-bold text-text-primary mb-6">
+          Explore Narratives
+        </h2>
+
+        {/* Category Filter and AI Insight Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
+          {/* Category Filter - Takes 8 columns on desktop */}
+          <div className="lg:col-span-8">
+            <CategoryFilter
+              onCategoryChange={handleCategoryChange}
+              defaultCategory="all"
+            />
+          </div>
+
+          {/* AI Insight Button - Takes 4 columns on desktop */}
+          <div className="lg:col-span-4">
+            <AIInsightButton />
+          </div>
         </div>
 
         {/* Markets Count */}
