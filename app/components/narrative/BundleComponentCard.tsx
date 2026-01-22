@@ -3,6 +3,7 @@ interface BundleComponentCardProps {
   resolutionSource: string
   weight: number
   progressColor?: 'long' | 'short' | 'neutral'
+  polymarketUrl?: string
 }
 
 export default function BundleComponentCard({
@@ -10,6 +11,7 @@ export default function BundleComponentCard({
   resolutionSource,
   weight,
   progressColor = 'neutral',
+  polymarketUrl,
 }: BundleComponentCardProps) {
   const getProgressColorClass = () => {
     switch (progressColor) {
@@ -42,12 +44,24 @@ export default function BundleComponentCard({
       </div>
 
       {/* Resolution Source */}
-      <p className="text-text-tertiary text-sm mb-4">
+      <p className="text-text-tertiary text-sm mb-2">
         Resolution Source: {resolutionSource}
       </p>
 
+      {/* View on Polymarket Link */}
+      {polymarketUrl && (
+        <a
+          href={polymarketUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-long hover:text-long-hover text-sm font-semibold transition-colors inline-block mb-4"
+        >
+          View on Polymarket
+        </a>
+      )}
+
       {/* 进度条 */}
-      <div className="w-full bg-bg-primary rounded-full h-2 overflow-hidden">
+      <div className="w-full bg-bg-primary rounded-full h-2 overflow-hidden mt-4">
         <div
           className={`h-full ${getProgressColorClass()} transition-all duration-500`}
           style={{ width: `${weight}%` }}

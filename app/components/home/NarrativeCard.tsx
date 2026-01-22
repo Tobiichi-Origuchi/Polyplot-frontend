@@ -85,7 +85,7 @@ export default function NarrativeCard({
   const potentialProfit = (amount * 0.15).toFixed(2);
 
   return (
-    <div className="bg-bg-card rounded-2xl overflow-hidden border border-border-primary shadow-xl hover:shadow-2xl transition-shadow">
+    <div className="bg-bg-card rounded-2xl overflow-hidden border border-border-primary shadow-xl hover:shadow-2xl hover:-translate-y-2 hover:border-long/50 transition-all duration-300 ease-out">
       {/* 卡片头部背景图 */}
       <div
         className="relative h-48 bg-linear-to-br from-bg-secondary to-bg-primary overflow-hidden cursor-pointer group"

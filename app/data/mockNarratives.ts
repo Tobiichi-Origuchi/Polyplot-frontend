@@ -56,6 +56,7 @@ export const mockNarratives: Record<string, NarrativeDetail> = {
         resolutionSource: 'Binance Spot Price',
         weight: 50,
         progressColor: 'long',
+        polymarketUrl: 'https://polymarket.com/event/bitcoin-75k-pre-halving',
       },
       {
         id: '2',
@@ -63,6 +64,7 @@ export const mockNarratives: Record<string, NarrativeDetail> = {
         resolutionSource: 'Blockchain.com',
         weight: 30,
         progressColor: 'short',
+        polymarketUrl: 'https://polymarket.com/event/bitcoin-difficulty-adjustment',
       },
       {
         id: '3',
@@ -70,10 +72,10 @@ export const mockNarratives: Record<string, NarrativeDetail> = {
         resolutionSource: 'SEC.gov Press Release',
         weight: 20,
         progressColor: 'neutral',
+        polymarketUrl: 'https://polymarket.com/event/sec-options-etf-approval',
       },
     ],
     isLive: true,
-    polymarketUrl: 'https://polymarket.com/event/bitcoin-halving-2024',
     imageUrl: '/narrative-bg.jpg',
   },
   'ai-market-prediction': {
@@ -100,6 +102,7 @@ export const mockNarratives: Record<string, NarrativeDetail> = {
         resolutionSource: 'Official Press Release',
         weight: 40,
         progressColor: 'long',
+        polymarketUrl: 'https://polymarket.com/event/openai-valuation-100b',
       },
       {
         id: '2',
@@ -107,6 +110,7 @@ export const mockNarratives: Record<string, NarrativeDetail> = {
         resolutionSource: 'EU Official Journal',
         weight: 35,
         progressColor: 'neutral',
+        polymarketUrl: 'https://polymarket.com/event/eu-ai-act-implementation',
       },
       {
         id: '3',
@@ -114,10 +118,10 @@ export const mockNarratives: Record<string, NarrativeDetail> = {
         resolutionSource: 'OpenAI Blog',
         weight: 25,
         progressColor: 'short',
+        polymarketUrl: 'https://polymarket.com/event/gpt5-release',
       },
     ],
     isLive: true,
-    polymarketUrl: 'https://polymarket.com/event/ai-market-prediction',
     imageUrl: '/narrative-bg.jpg',
   },
   'presidential-election-2024': {
@@ -145,6 +149,7 @@ export const mockNarratives: Record<string, NarrativeDetail> = {
         resolutionSource: 'Official State Results',
         weight: 45,
         progressColor: 'long',
+        polymarketUrl: 'https://polymarket.com/event/pennsylvania-democratic-win',
       },
       {
         id: '2',
@@ -152,6 +157,7 @@ export const mockNarratives: Record<string, NarrativeDetail> = {
         resolutionSource: 'U.S. Census Bureau',
         weight: 30,
         progressColor: 'neutral',
+        polymarketUrl: 'https://polymarket.com/event/voter-turnout-65',
       },
       {
         id: '3',
@@ -159,10 +165,10 @@ export const mockNarratives: Record<string, NarrativeDetail> = {
         resolutionSource: 'Official Electoral Results',
         weight: 25,
         progressColor: 'short',
+        polymarketUrl: 'https://polymarket.com/event/electoral-margin-50',
       },
     ],
     isLive: true,
-    polymarketUrl: 'https://polymarket.com/event/presidential-election-2024',
     imageUrl: '/narrative-bg.jpg',
   },
 }

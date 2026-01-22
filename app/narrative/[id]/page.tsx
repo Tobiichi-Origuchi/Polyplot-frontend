@@ -78,7 +78,6 @@ export default function NarrativeDetailPage() {
             {/* Bundle 组成 */}
             <BundleComposition
               components={narrative.bundleComponents}
-              polymarketUrl={narrative.polymarketUrl}
             />
           </div>
 

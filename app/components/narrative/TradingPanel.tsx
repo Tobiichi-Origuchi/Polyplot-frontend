@@ -126,12 +126,12 @@ export default function TradingPanel({
       <button
         onClick={handleConfirm}
         disabled={isDisabled}
-        className={`w-full py-4 rounded-lg font-bold text-white transition-colors mb-4 ${
+        className={`w-full py-4 rounded-lg font-bold transition-colors mb-4 ${
           isDisabled
             ? 'bg-bg-secondary text-text-tertiary cursor-not-allowed'
             : tradeType === 'long'
             ? 'bg-long hover:bg-long-hover text-black'
-            : 'bg-short hover:bg-short-hover'
+            : 'bg-short hover:bg-short-hover text-white'
         }`}
       >
         {tradeMode === 'buy' ? 'Buy' : 'Sell'} {tradeType === 'long' ? 'Long' : 'Short'}

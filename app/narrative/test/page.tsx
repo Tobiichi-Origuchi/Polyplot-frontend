@@ -27,6 +27,7 @@ export default function NarrativeTestPage() {
       resolutionSource: 'Binance Spot Price',
       weight: 50,
       progressColor: 'long',
+      polymarketUrl: 'https://polymarket.com/event/bitcoin-75k-pre-halving',
     },
     {
       id: '2',
@@ -34,6 +35,7 @@ export default function NarrativeTestPage() {
       resolutionSource: 'Blockchain.com',
       weight: 30,
       progressColor: 'short',
+      polymarketUrl: 'https://polymarket.com/event/bitcoin-difficulty-adjustment',
     },
     {
       id: '3',
@@ -41,6 +43,7 @@ export default function NarrativeTestPage() {
       resolutionSource: 'SEC.gov Press Release',
       weight: 20,
       progressColor: 'neutral',
+      polymarketUrl: 'https://polymarket.com/event/sec-options-etf-approval',
     },
   ]
 
@@ -73,7 +76,6 @@ export default function NarrativeTestPage() {
 
             <BundleComposition
               components={bundleComponents}
-              polymarketUrl="https://polymarket.com/event/bitcoin-halving-2024"
             />
           </div>
 
