@@ -1,14 +1,38 @@
 'use client';
 
-import { useState } from 'react';
-import { Sparkles, ChevronDown } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function AIInsightButton() {
   const [isOpen, setIsOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  // 点击外部关闭
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      const isClickOnButton = buttonRef.current?.contains(target);
+      const isClickOnContent = contentRef.current?.contains(target);
+
+      if (!isClickOnButton && !isClickOnContent && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
       <button
+        ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between bg-gradient-to-r from-short/20 to-long/20 rounded-xl px-5 py-3.5 border border-border-primary hover:border-long/50 transition-all group"
       >
@@ -16,15 +40,19 @@ export default function AIInsightButton() {
           <Sparkles className="w-5 h-5 text-long group-hover:text-long-hover transition-colors" />
           <span className="text-text-primary font-semibold text-lg">AI Insight</span>
         </div>
-        <ChevronDown
-          className={`w-5 h-5 text-text-secondary transition-transform duration-300 ${
-            isOpen ? 'rotate-180' : ''
-          }`}
-        />
+        {isOpen ? (
+          <ChevronUp className="w-5 h-5 text-text-secondary transition-all duration-300" />
+        ) : (
+          <ChevronDown className="w-5 h-5 text-text-secondary transition-all duration-300" />
+        )}
       </button>
 
+      {/* 悬浮内容 */}
       {isOpen && (
-        <div className="mt-3 p-5 bg-bg-card rounded-xl border border-border-primary animate-[dropdown-fade-in_0.2s_ease-out]">
+        <div
+          ref={contentRef}
+          className="absolute top-full right-0 mt-3 w-full lg:w-[420px] p-5 bg-bg-card rounded-xl border border-border-primary shadow-2xl animate-[dropdown-fade-in_0.2s_ease-out] z-50"
+        >
           <div className="space-y-4">
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-short/30 to-long/30 flex items-center justify-center flex-shrink-0">
