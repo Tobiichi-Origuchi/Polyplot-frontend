@@ -17,7 +17,9 @@ export default function AIInsightButton() {
   const [isTyping, setIsTyping] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const inputContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   // 点击外部关闭
   useEffect(() => {
@@ -40,10 +42,13 @@ export default function AIInsightButton() {
     };
   }, [isOpen]);
 
-  // 自动滚动到底部
+  // 当 AI 回复完成时，自动滚动对话区域到底部(只影响对话框内部，不影响浏览器窗口)
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    if (messages.length > 0 && messagesContainerRef.current) {
+      // 使用 scrollTop 而不是 scrollIntoView，避免影响浏览器窗口
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  }, [messages, isTyping]);
 
   // 模拟 AI 响应
   const getAIResponse = (userMessage: string): string => {
@@ -61,6 +66,7 @@ export default function AIInsightButton() {
       return 'I can help you analyze market trends, predict outcomes, and understand narrative performance. What would you like to know?';
     }
   };
+
 
   // 处理发送消息
   const handleSendMessage = async () => {
@@ -154,7 +160,7 @@ export default function AIInsightButton() {
           {/* 消息历史记录 - 可滚动 */}
           {messages.length > 0 && (
             <>
-              <div className="flex-1 overflow-y-auto p-5 space-y-3 scrollbar-hide">
+              <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-5 space-y-3 scrollbar-hide">
                 {messages.map((msg) => (
                   <div
                     key={msg.id}
@@ -198,6 +204,7 @@ export default function AIInsightButton() {
                   </div>
                 )}
 
+                {/* 滚动目标元素 */}
                 <div ref={messagesEndRef} />
               </div>
               <div className="border-t border-border-primary flex-shrink-0"></div>
@@ -205,7 +212,7 @@ export default function AIInsightButton() {
           )}
 
           {/* 消息输入框 */}
-          <div className="p-5 flex-shrink-0">
+          <div ref={inputContainerRef} className="p-5 flex-shrink-0">
             <div className="flex items-center gap-2">
               <input
                 type="text"
