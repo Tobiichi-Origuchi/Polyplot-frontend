@@ -1,32 +1,27 @@
 'use client';
 
-import { Plus } from 'lucide-react';
-
 interface BalanceDisplayProps {
   balance?: number;
+  onDeposit?: () => void;
 }
 
-export default function BalanceDisplay({ balance = 1240.50 }: BalanceDisplayProps) {
-  const handleDeposit = () => {
-    // TODO: Open deposit modal
-    console.log('Open deposit modal');
-  };
-
+export default function BalanceDisplay({ balance = 1240.50, onDeposit }: BalanceDisplayProps) {
   return (
-    <div className="flex items-center gap-2 bg-bg-secondary rounded-full pl-4 pr-1 py-1 border border-border-primary">
-      {/* Balance Amount */}
-      <span className="text-currency font-bold text-lg">
-        ${balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-      </span>
+    <>
+      {/* Balance Amount Display */}
+      <div className="bg-bg-secondary rounded-lg px-4 py-2.5 border border-border-primary">
+        <span className="text-currency font-bold text-lg">
+          ${balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        </span>
+      </div>
 
       {/* Deposit Button */}
       <button
-        onClick={handleDeposit}
-        className="w-8 h-8 rounded-full bg-long hover:bg-long-hover text-white flex items-center justify-center transition-colors"
-        aria-label="Deposit funds"
+        onClick={onDeposit}
+        className="bg-long hover:bg-long-hover text-black font-semibold px-5 py-2.5 rounded-lg transition-colors"
       >
-        <Plus size={18} />
+        Deposit
       </button>
-    </div>
+    </>
   );
 }
