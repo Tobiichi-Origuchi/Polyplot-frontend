@@ -195,11 +195,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary mb-4">
-              Trade on <span className="text-long">What You Know</span>
+              Trade Your <span className="text-long">Worldview</span>
             </h1>
-            <p className="text-lg sm:text-xl text-text-secondary max-w-2xl mx-auto">
-              Predict the future and earn rewards. Long or short on real-world events across crypto, politics, sports, and more.
-            </p>
           </div>
         </div>
       </div>
