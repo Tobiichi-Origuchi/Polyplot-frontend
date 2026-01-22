@@ -204,7 +204,7 @@ export default function NarrativeCard({
                 <span className="text-text-secondary text-sm font-medium">
                   Position Amount
                 </span>
-                <span className={`${tradeType === 'long' ? 'bg-long' : 'bg-short'} px-3 py-1 rounded-md text-white text-sm font-semibold`}>
+                <span className={`${tradeType === 'long' ? 'bg-long text-black' : 'bg-short text-white'} px-3 py-1 rounded-md text-sm font-semibold`}>
                   Buying {tradeType === 'long' ? 'Long' : 'Short'}
                 </span>
               </div>
@@ -266,7 +266,7 @@ export default function NarrativeCard({
               {/* 确认按钮 */}
               <button
                 onClick={handleConfirm}
-                className={`w-full ${tradeType === 'long' ? 'bg-long hover:bg-long-hover' : 'bg-short hover:bg-short-hover'} text-white font-bold py-3 rounded-lg transition-colors mb-4`}
+                className={`w-full ${tradeType === 'long' ? 'bg-long hover:bg-long-hover text-black' : 'bg-short hover:bg-short-hover text-white'} font-bold py-3 rounded-lg transition-colors mb-4`}
               >
                 Confirm {tradeType === 'long' ? 'Long' : 'Short'}
               </button>
