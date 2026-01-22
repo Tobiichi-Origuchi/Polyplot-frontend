@@ -191,7 +191,15 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-bg-primary">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-bg-secondary via-bg-primary to-bg-secondary border-b border-border-primary">
+      <div
+        className="border-b border-border-primary"
+        style={{
+          backgroundColor: '#0f0f0f',
+          backgroundImage: `url('/topography.svg')`,
+          backgroundRepeat: 'repeat',
+          backgroundSize: 'auto',
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary mb-4">
