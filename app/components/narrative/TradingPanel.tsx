@@ -42,12 +42,12 @@ export default function TradingPanel({
   const isDisabled = amount <= 0 || amount > userBalance
 
   return (
-    <div className="bg-bg-card rounded-2xl p-6 border border-border-primary sticky top-6">
+    <div className="bg-bg-card rounded-2xl p-5 border border-border-primary sticky top-24">
       {/* Buy/Sell 标签切换 */}
-      <div className="flex border-b border-border-primary mb-6">
+      <div className="flex border-b border-border-primary mb-4">
         <button
           onClick={() => setTradeMode('buy')}
-          className={`flex-1 pb-3 font-semibold transition-colors relative ${
+          className={`flex-1 pb-2.5 font-semibold transition-colors relative ${
             tradeMode === 'buy'
               ? 'text-text-primary'
               : 'text-text-tertiary'
@@ -60,7 +60,7 @@ export default function TradingPanel({
         </button>
         <button
           onClick={() => setTradeMode('sell')}
-          className={`flex-1 pb-3 font-semibold transition-colors relative ${
+          className={`flex-1 pb-2.5 font-semibold transition-colors relative ${
             tradeMode === 'sell'
               ? 'text-text-primary'
               : 'text-text-tertiary'
@@ -74,10 +74,10 @@ export default function TradingPanel({
       </div>
 
       {/* Long/Short 切换按钮 */}
-      <div className="flex gap-2 mb-6">
+      <div className="flex gap-2 mb-4">
         <button
           onClick={() => setTradeType('long')}
-          className={`flex-1 py-3 rounded-lg font-semibold transition-all ${
+          className={`flex-1 py-2.5 rounded-lg font-semibold transition-all ${
             tradeType === 'long'
               ? 'bg-long text-black'
               : 'bg-bg-secondary text-text-secondary border border-border-primary'
@@ -87,7 +87,7 @@ export default function TradingPanel({
         </button>
         <button
           onClick={() => setTradeType('short')}
-          className={`flex-1 py-3 rounded-lg font-semibold transition-all ${
+          className={`flex-1 py-2.5 rounded-lg font-semibold transition-all ${
             tradeType === 'short'
               ? 'bg-short text-white'
               : 'bg-bg-secondary text-text-secondary border border-border-primary'
@@ -126,7 +126,7 @@ export default function TradingPanel({
       <button
         onClick={handleConfirm}
         disabled={isDisabled}
-        className={`w-full py-4 rounded-lg font-bold transition-colors mb-4 ${
+        className={`w-full py-3 rounded-lg font-bold transition-colors mb-3 ${
           isDisabled
             ? 'bg-bg-secondary text-text-tertiary cursor-not-allowed'
             : tradeType === 'long'
@@ -138,7 +138,7 @@ export default function TradingPanel({
       </button>
 
       {/* 服务条款 */}
-      <p className="text-text-tertiary text-xs text-center leading-relaxed">
+      <p className="text-text-tertiary text-[10px] text-center leading-relaxed">
         By trading, you agree to the{' '}
         <a href="#" className="underline hover:text-text-secondary transition-colors">
           Terms of Service

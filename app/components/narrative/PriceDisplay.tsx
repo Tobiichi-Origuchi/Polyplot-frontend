@@ -12,13 +12,13 @@ export default function PriceDisplay({
   changeDirection = 'up',
 }: PriceDisplayProps) {
   return (
-    <div className="mb-6">
-      <span className="text-text-tertiary text-sm block mb-2">{label}</span>
-      <div className="flex items-baseline gap-4">
-        <span className="text-text-primary text-5xl font-bold">{price}</span>
+    <div className="mb-4">
+      <span className="text-text-tertiary text-xs block mb-1.5">{label}</span>
+      <div className="flex items-baseline gap-3">
+        <span className="text-text-primary text-3xl font-bold">{price}</span>
         {change && (
           <span
-            className={`text-sm font-semibold ${
+            className={`text-xs font-semibold ${
               changeDirection === 'up' ? 'text-new' : 'text-left'
             }`}
           >

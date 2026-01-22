@@ -17,16 +17,16 @@ export default function AmountInput({
   }
 
   return (
-    <div className="mb-4">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-text-secondary text-sm font-medium">Amount</span>
-        <span className="text-text-tertiary text-sm">
+    <div className="mb-3">
+      <div className="flex justify-between items-center mb-1.5">
+        <span className="text-text-secondary text-xs font-medium">Amount</span>
+        <span className="text-text-tertiary text-xs">
           Balance: ${balance.toFixed(2)}
         </span>
       </div>
 
-      <div className="bg-bg-secondary border border-border-primary rounded-xl px-4 py-4 flex items-center">
-        <span className="text-text-tertiary text-xl mr-3">$</span>
+      <div className="bg-bg-secondary border border-border-primary rounded-xl px-3 py-3 flex items-center">
+        <span className="text-text-tertiary text-lg mr-2">$</span>
         <input
           type="number"
           value={value || ''}
@@ -35,9 +35,9 @@ export default function AmountInput({
           step="0.01"
           min="0"
           max={balance}
-          className="bg-transparent text-text-primary text-xl font-medium flex-1 outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          className="bg-transparent text-text-primary text-lg font-medium flex-1 outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         />
-        <span className="text-text-tertiary text-sm ml-3">USDC</span>
+        <span className="text-text-tertiary text-xs ml-2">USDC</span>
       </div>
     </div>
   )
