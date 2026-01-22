@@ -122,7 +122,7 @@ export default function AIInsightButton() {
       {isOpen && (
         <div
           ref={contentRef}
-          className="absolute top-full right-0 mt-3 w-full lg:w-[420px] bg-bg-card rounded-xl border border-border-primary shadow-2xl animate-[dropdown-fade-in_0.2s_ease-out] z-50 max-h-[600px] flex flex-col"
+          className="absolute top-full right-0 mt-3 w-full lg:w-[420px] bg-bg-card rounded-xl border border-border-primary shadow-2xl animate-[dropdown-fade-in_0.2s_ease-out] z-40 max-h-[600px] flex flex-col"
         >
           {/* AI 分析内容 */}
           <div className="p-5 space-y-4 flex-shrink-0">
