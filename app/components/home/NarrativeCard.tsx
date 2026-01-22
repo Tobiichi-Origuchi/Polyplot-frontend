@@ -108,7 +108,12 @@ export default function NarrativeCard({
       </div>
 
       {/* 卡片内容 */}
-      <div className={`p-6 h-70 flex flex-col relative bg-bg-card rounded-t-2xl transition-all duration-300 ${isInputMode ? '-mt-16' : ''}`}>
+      <div
+        className="p-6 h-70 flex flex-col relative bg-bg-card rounded-t-2xl transition-all duration-300"
+        style={{
+          transform: isInputMode ? 'translateY(-4rem)' : 'translateY(0)',
+        }}
+      >
         <h3 className="text-text-primary font-bold text-xl mb-2 truncate">
           {title}
         </h3>
