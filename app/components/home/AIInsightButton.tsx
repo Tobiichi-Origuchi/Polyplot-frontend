@@ -14,6 +14,8 @@ interface Message {
 export default function AIInsightButton() {
   const { isLoggedIn, openLoginModal } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
@@ -22,6 +24,49 @@ export default function AIInsightButton() {
   const inputContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // 管理渲染状态
+  useEffect(() => {
+    if (isOpen) {
+      setShouldRender(true);
+      setIsClosing(false);
+      // 清除任何待执行的关闭定时器
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+        closeTimeoutRef.current = null;
+      }
+    }
+  }, [isOpen]);
+
+  // 清理定时器
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // 处理关闭动画
+  const handleClose = () => {
+    if (isClosing) return; // 防止重复触发
+
+    setIsClosing(true);
+
+    // 清除之前的定时器（如果有）
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+
+    // 等待动画完成后再真正关闭
+    closeTimeoutRef.current = setTimeout(() => {
+      setShouldRender(false);
+      setIsClosing(false);
+      setIsOpen(false);
+      closeTimeoutRef.current = null;
+    }, 200); // 与动画时长一致
+  };
 
   // 点击外部关闭
   useEffect(() => {
@@ -30,8 +75,8 @@ export default function AIInsightButton() {
       const isClickOnButton = buttonRef.current?.contains(target);
       const isClickOnContent = contentRef.current?.contains(target);
 
-      if (!isClickOnButton && !isClickOnContent && isOpen) {
-        setIsOpen(false);
+      if (!isClickOnButton && !isClickOnContent && isOpen && !isClosing) {
+        handleClose();
       }
     };
 
@@ -42,7 +87,7 @@ export default function AIInsightButton() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen]);
+  }, [isOpen, isClosing]);
 
   // 当 AI 回复完成时，自动滚动对话区域到底部(只影响对话框内部，不影响浏览器窗口)
   useEffect(() => {
@@ -115,7 +160,13 @@ export default function AIInsightButton() {
       openLoginModal();
     } else {
       // 已登录时，切换聊天框显示状态
-      setIsOpen(!isOpen);
+      if (isOpen) {
+        // 关闭时播放动画
+        handleClose();
+      } else {
+        // 打开时直接设置状态
+        setIsOpen(true);
+      }
     }
   };
 
@@ -141,10 +192,14 @@ export default function AIInsightButton() {
       </button>
 
       {/* 悬浮内容 - 仅在已登录且打开时显示 */}
-      {isLoggedIn && isOpen && (
+      {isLoggedIn && shouldRender && (
         <div
           ref={contentRef}
-          className="absolute top-full right-0 mt-3 w-full lg:w-[420px] bg-bg-card rounded-xl border border-border-primary shadow-2xl animate-[dropdown-fade-in_0.2s_ease-out] z-40 max-h-[600px] flex flex-col"
+          className={`absolute top-full right-0 mt-3 w-full lg:w-[420px] bg-bg-card rounded-xl border border-border-primary shadow-2xl z-40 max-h-[600px] flex flex-col ${
+            isClosing
+              ? 'animate-[dropdown-fade-out_0.2s_ease-in]'
+              : 'animate-[dropdown-fade-in_0.2s_ease-out]'
+          }`}
         >
           {/* AI 分析内容 */}
           <div className="p-5 space-y-4 flex-shrink-0">
