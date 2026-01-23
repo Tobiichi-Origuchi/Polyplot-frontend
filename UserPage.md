@@ -17,12 +17,18 @@
   - 图表占位区域
   - **优化卡片尺寸，缩小内边距、字体和图表高度** (2026-01-23 更新)
 - **TimeFilterButton** 组件 (`app/components/user/TimeFilterButton.tsx`)
+- **PositionsActivitySection** 组件 (`app/components/user/PositionsActivitySection.tsx`)
+  - Positions/Activity 标签切换
+  - Active/Closed 状态切换
+  - 搜索功能
+  - Value 排序按钮
+  - 表格布局和空状态 (2026-01-23 新增)
 - **页面路由** (`app/[userID]/page.tsx` - 服务器组件)
 - **UserPageClient** 组件 (`app/[userID]/UserPageClient.tsx` - 客户端组件)
   - 处理所有交互事件（Deposit, Withdraw, Connect）
 
 ### ⏳ 待实现
-- PositionsActivitySection 组件
+- PositionsActivitySection 数据集成（仓位列表、活动历史）
 - 数据 API 集成
 - 图表库集成（Recharts 或 Chart.js）
 
@@ -389,67 +395,116 @@ interface ProfitLossChartProps {
 
 显示用户的仓位和活动信息。
 
+#### Props 定义
+
+```tsx
+interface PositionsActivitySectionProps {
+  // 可以后续添加数据 props
+  // positions?: Position[]
+  // activities?: Activity[]
+}
+```
+
+#### 组件文件位置
+- 主组件: `app/components/user/PositionsActivitySection.tsx`
+- 导出文件: `app/components/user/index.ts`
+
+#### 功能特性
+- **双标签切换**: Positions 和 Activity 标签页切换
+- **状态筛选**: Active/Closed 仓位状态切换
+- **搜索功能**: 实时搜索仓位
+- **排序功能**: 按 Value 排序
+- **响应式表格**: 自适应布局
+- **空状态展示**: 无数据时的友好提示
+
 #### 组件结构
 ```tsx
 <div>
   {/* Positions/Activity 标签栏 */}
-  <div className="flex gap-8 mb-6">
-    <TabButton active={true}>Positions</TabButton>
-    <TabButton active={false}>Activity</TabButton>
+  <div className="flex gap-8 mb-6 border-b border-border-primary">
+    <TabButton active={activeTab === 'positions'} onClick={() => setActiveTab('positions')}>
+      Positions
+    </TabButton>
+    <TabButton active={activeTab === 'activity'} onClick={() => setActiveTab('activity')}>
+      Activity
+    </TabButton>
   </div>
 
   {/* Positions 内容区 */}
-  <div className="bg-bg-card rounded-2xl border border-border-primary p-6">
-    {/* 控制栏 */}
-    <div className="flex justify-between items-center mb-6">
-      {/* 左侧：Active/Closed 切换 */}
-      <div className="flex gap-2">
-        <StatusButton active={true}>Active</StatusButton>
-        <StatusButton active={false}>Closed</StatusButton>
+  {activeTab === 'positions' && (
+    <div className="bg-bg-card rounded-2xl border border-border-primary p-6">
+      {/* 控制栏 */}
+      <div className="flex justify-between items-center mb-6 gap-4">
+        {/* 左侧：Active/Closed 切换 */}
+        <div className="flex gap-2">
+          <StatusButton active={activeStatus === 'active'} onClick={() => setActiveStatus('active')}>
+            Active
+          </StatusButton>
+          <StatusButton active={activeStatus === 'closed'} onClick={() => setActiveStatus('closed')}>
+            Closed
+          </StatusButton>
+        </div>
+
+        {/* 中间：搜索框 */}
+        <div className="flex-1 max-w-2xl">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-tertiary" />
+            <input
+              type="text"
+              placeholder="Search positions"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-bg-secondary border border-border-primary rounded-lg pl-10 pr-4 py-2.5 text-text-primary text-sm placeholder:text-text-tertiary focus:outline-none focus:border-border-secondary transition-colors"
+            />
+          </div>
+        </div>
+
+        {/* 右侧：排序按钮 */}
+        <button className="flex items-center gap-2 bg-bg-secondary hover:bg-bg-secondary/80 text-text-primary px-4 py-2.5 rounded-lg transition-colors border border-border-primary">
+          <ArrowUpDown className="w-4 h-4" />
+          <span className="text-sm font-semibold">Value</span>
+        </button>
       </div>
 
-      {/* 中间：搜索框 */}
-      <div className="flex-1 max-w-md mx-4">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-tertiary" />
-          <input
-            type="text"
-            placeholder="Search positions"
-            className="w-full bg-bg-secondary border border-border-primary rounded-lg pl-10 pr-4 py-2 text-text-primary text-sm placeholder:text-text-tertiary focus:outline-none focus:border-border-secondary"
-          />
+      {/* 表格区域 */}
+      <div>
+        {/* 表头 */}
+        <div className="grid grid-cols-4 gap-4 pb-3 mb-4 border-b border-border-primary">
+          <div className="text-text-tertiary text-xs font-semibold uppercase tracking-wide">Market</div>
+          <div className="text-text-tertiary text-xs font-semibold uppercase tracking-wide">Avg</div>
+          <div className="text-text-tertiary text-xs font-semibold uppercase tracking-wide">Current</div>
+          <div className="text-text-tertiary text-xs font-semibold uppercase tracking-wide text-right flex items-center justify-end gap-1">
+            Value
+            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 11.5l-4-4h8l-4 4z" />
+            </svg>
+          </div>
+        </div>
+
+        {/* 空状态 */}
+        <div className="py-20 text-center">
+          <p className="text-text-secondary text-sm">No positions found</p>
         </div>
       </div>
-
-      {/* 右侧：排序按钮 */}
-      <button className="flex items-center gap-2 bg-bg-secondary hover:bg-bg-secondary/80 text-text-primary px-4 py-2 rounded-lg transition-colors">
-        <ArrowUpDown className="w-4 h-4" />
-        <span className="text-sm font-semibold">Value</span>
-      </button>
     </div>
+  )}
 
-    {/* 表格区域 */}
-    <div>
-      {/* 表头 */}
-      <div className="grid grid-cols-4 gap-4 pb-3 mb-4 border-b border-border-primary">
-        <div className="text-text-tertiary text-xs font-semibold uppercase">Market</div>
-        <div className="text-text-tertiary text-xs font-semibold uppercase">AVG</div>
-        <div className="text-text-tertiary text-xs font-semibold uppercase">Current</div>
-        <div className="text-text-tertiary text-xs font-semibold uppercase text-right">Value</div>
-      </div>
-
-      {/* 空状态 */}
-      <div className="py-16 text-center">
-        <p className="text-text-secondary text-sm">No positions found</p>
+  {/* Activity 内容区 */}
+  {activeTab === 'activity' && (
+    <div className="bg-bg-card rounded-2xl border border-border-primary p-6">
+      <div className="py-20 text-center">
+        <p className="text-text-secondary text-sm">Activity - Coming Soon</p>
       </div>
     </div>
-  </div>
+  )}
 </div>
 ```
 
 #### 子组件：TabButton
 ```tsx
 <button
-  className={`relative text-sm font-semibold pb-2 transition-colors ${
+  onClick={onClick}
+  className={`relative text-lg font-semibold pb-3 transition-colors ${
     active
       ? 'text-text-primary'
       : 'text-text-secondary hover:text-text-primary'
@@ -465,7 +520,8 @@ interface ProfitLossChartProps {
 #### 子组件：StatusButton
 ```tsx
 <button
-  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
+  onClick={onClick}
+  className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
     active
       ? 'bg-bg-secondary text-text-primary'
       : 'bg-transparent text-text-secondary hover:bg-bg-secondary/50'
@@ -476,14 +532,41 @@ interface ProfitLossChartProps {
 ```
 
 #### 样式规范
-- **标签栏**: 使用 `gap-8` 间距
-- **激活标签**: 底部橙色下划线 (`bg-long`)
-- **Active/Closed 按钮**: 激活时使用 `bg-bg-secondary`
-- **搜索框**: `bg-bg-secondary`, `border border-border-primary`
-- **搜索图标**: `text-text-tertiary`, 左侧内边距 `pl-10`
-- **排序按钮**: `bg-bg-secondary`, 悬停效果
-- **表头**: `text-text-tertiary`, `text-xs`, `uppercase`, `font-semibold`
-- **空状态**: 垂直内边距 `py-16`, 居中显示
+- **标签栏**:
+  - 使用 `gap-8` 间距
+  - 底部边框 `border-b border-border-primary`
+  - 标签字体 `text-lg font-semibold`
+  - 标签底部内边距 `pb-3`
+- **激活标签**:
+  - 底部橙色下划线 (`bg-long`)
+  - 高度 `h-0.5`
+- **内容区卡片**: `bg-bg-card`, `rounded-2xl`, `border border-border-primary`, `p-6`
+- **控制栏**:
+  - Flexbox 布局 `flex justify-between items-center mb-6 gap-4`
+  - Active/Closed 按钮：`px-5 py-2.5`
+  - 搜索框最大宽度：`max-w-2xl`
+- **Active/Closed 按钮**:
+  - 激活时：`bg-bg-secondary text-text-primary`
+  - 未激活：`bg-transparent text-text-secondary hover:bg-bg-secondary/50`
+- **搜索框**:
+  - 背景：`bg-bg-secondary`
+  - 边框：`border border-border-primary`
+  - 聚焦边框：`focus:border-border-secondary`
+  - 内边距：`pl-10 pr-4 py-2.5`
+- **搜索图标**: `text-text-tertiary`, `w-4 h-4`, 左侧定位 `left-3`
+- **排序按钮**:
+  - 背景：`bg-bg-secondary hover:bg-bg-secondary/80`
+  - 边框：`border border-border-primary`
+  - 内边距：`px-4 py-2.5`
+- **表头**:
+  - 4列网格布局：`grid grid-cols-4 gap-4`
+  - 文字：`text-text-tertiary`, `text-xs`, `uppercase`, `font-semibold`, `tracking-wide`
+  - 边框：`border-b border-border-primary`
+  - Value 列右对齐并包含下拉箭头图标
+- **空状态**:
+  - 垂直内边距：`py-20`
+  - 文字居中：`text-center`
+  - 文字样式：`text-text-secondary text-sm`
 
 ---
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { UserProfileCard, ProfitLossChart } from '@/app/components/user'
+import { UserProfileCard, ProfitLossChart, PositionsActivitySection } from '@/app/components/user'
 
 interface UserPageClientProps {
   userData: {
@@ -64,10 +64,8 @@ export default function UserPageClient({ userData }: UserPageClientProps) {
           />
         </div>
 
-        {/* Positions/Activity 区域 (待实现) */}
-        <div className="bg-bg-card rounded-2xl border border-border-primary p-6 flex items-center justify-center">
-          <p className="text-text-secondary">Positions/Activity Section - Coming Soon</p>
-        </div>
+        {/* Positions/Activity 区域 */}
+        <PositionsActivitySection />
       </main>
     </div>
   )
