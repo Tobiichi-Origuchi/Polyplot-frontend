@@ -1,2 +1,4 @@
 export { default as UserProfileCard } from './UserProfileCard'
 export { default as UserStatItem } from './UserStatItem'
+export { default as ProfitLossChart } from './ProfitLossChart'
+export { default as TimeFilterButton } from './TimeFilterButton'

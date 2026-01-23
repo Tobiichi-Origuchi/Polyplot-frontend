@@ -5,17 +5,26 @@
 ### ✅ 已完成
 - **UserProfileCard** 组件 (`app/components/user/UserProfileCard.tsx`)
   - 包含 Deposit 和 Withdraw 按钮
-  - Connect 按钮固定在右上角
+  - Connect 按钮固定在右上角，使用推特 (X) SVG 图标
+  - Withdraw 按钮动态配色
+  - **使用 Flexbox 布局，Positions Value 和按钮固定在卡片底部** (2026-01-23 更新)
+  - **Connect 按钮图标更换为推特官方 SVG** (2026-01-23 更新)
 - **UserStatItem** 组件 (`app/components/user/UserStatItem.tsx`)
+- **ProfitLossChart** 组件 (`app/components/user/ProfitLossChart.tsx`)
+  - 显示盈亏金额和时间段
+  - 时间筛选按钮（1D, 1W, 1M, ALL）
+  - Polyplot 标识
+  - 图表占位区域
+  - **优化卡片尺寸，缩小内边距、字体和图表高度** (2026-01-23 更新)
+- **TimeFilterButton** 组件 (`app/components/user/TimeFilterButton.tsx`)
 - **页面路由** (`app/[userID]/page.tsx` - 服务器组件)
 - **UserPageClient** 组件 (`app/[userID]/UserPageClient.tsx` - 客户端组件)
   - 处理所有交互事件（Deposit, Withdraw, Connect）
 
 ### ⏳ 待实现
-- ProfitLossChart 组件
 - PositionsActivitySection 组件
 - 数据 API 集成
-- 图表库集成
+- 图表库集成（Recharts 或 Chart.js）
 
 ---
 
@@ -120,6 +129,25 @@ import { UserProfileCard } from '@/app/components/user'
 />
 ```
 
+### 示例 3: ProfitLossChart 组件
+```tsx
+import { ProfitLossChart } from '@/app/components/user'
+
+// 盈利状态
+<ProfitLossChart
+  profitLoss="$1,240.50"
+  period="Past Month"
+  isPositive={true}  // 绿色指示器
+/>
+
+// 亏损状态
+<ProfitLossChart
+  profitLoss="-$520.00"
+  period="Past Week"
+  isPositive={false}  // 红色指示器
+/>
+```
+
 访问示例页面：`http://localhost:3000/crazyjjjj`
 
 ---
@@ -184,15 +212,15 @@ interface UserProfileCardProps {
 
 #### 组件结构
 ```tsx
-<div className="bg-bg-card rounded-2xl border border-border-primary p-6 relative">
+<div className="bg-bg-card rounded-2xl border border-border-primary p-6 relative flex flex-col">
   {/* Connect 按钮 - 固定在右上角 */}
   <button className="absolute top-6 right-6 bg-short hover:bg-short-hover text-white text-sm font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors">
     Connect
-    <X className="w-3.5 h-3.5" />
+    <TwitterIcon className="w-3.5 h-3.5" />
   </button>
 
   {/* 用户信息区域 */}
-  <div className="flex items-start gap-4 mb-6 pr-28">
+  <div className="flex items-start gap-4 pr-28">
     {/* 头像 */}
     <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 via-orange-400 to-yellow-400 flex-shrink-0" />
 
@@ -205,24 +233,22 @@ interface UserProfileCardProps {
     </div>
   </div>
 
-  {/* 底部区域：统计数据和操作按钮 */}
-  <div className="grid grid-cols-3 gap-6 pt-6 border-t border-border-primary">
+  {/* 底部区域：统计数据和操作按钮 - 固定在底部 */}
+  <div className="flex items-end gap-4 pt-6 border-t border-border-primary mt-auto">
     {/* Positions Value 统计 */}
-    <UserStatItem label="Positions Value" value="$0.00" />
+    <div className="flex-shrink-0">
+      <UserStatItem label="Positions Value" value="$0.00" />
+    </div>
 
     {/* Deposit 按钮 */}
-    <div className="flex flex-col justify-end">
-      <button className="bg-long hover:bg-long-hover text-black font-semibold px-4 py-2.5 rounded-lg transition-colors w-full">
-        Deposit
-      </button>
-    </div>
+    <button className="flex-1 bg-long hover:bg-long-hover text-black font-semibold px-6 py-3 rounded-lg transition-colors">
+      Deposit
+    </button>
 
     {/* Withdraw 按钮 */}
-    <div className="flex flex-col justify-end">
-      <button className="bg-bg-secondary hover:bg-bg-secondary/80 border border-border-primary text-text-primary font-semibold px-4 py-2.5 rounded-lg transition-colors w-full">
-        Withdraw
-      </button>
-    </div>
+    <button className="flex-1 bg-bg-secondary hover:bg-bg-secondary/80 border border-border-primary text-text-primary font-semibold px-6 py-3 rounded-lg transition-colors">
+      Withdraw
+    </button>
   </div>
 </div>
 ```
@@ -236,7 +262,8 @@ interface UserProfileCardProps {
 ```
 
 #### 样式规范
-- **卡片容器**: `bg-bg-card`, `rounded-2xl`, `border border-border-primary`, `p-6`, `relative`
+- **卡片容器**: `bg-bg-card`, `rounded-2xl`, `border border-border-primary`, `p-6`, `relative`, `flex flex-col`
+  - **布局**: 使用 Flexbox 垂直布局，确保底部区域固定在卡片底部
 - **Connect 按钮**:
   - 定位: `absolute top-6 right-6` (固定在卡片右上角)
   - 颜色: `bg-short` 和 `bg-short-hover` (未连接) / `bg-new` 和 `hover:bg-emerald-600` (已连接)
@@ -245,17 +272,19 @@ interface UserProfileCardProps {
 - **头像**: 固定尺寸 `w-16 h-16`，渐变色从紫色到橙色到黄色
 - **用户名**: `text-2xl`, `font-bold`, `text-text-primary`, `truncate`
 - **元信息**: `text-text-secondary`, `text-sm`
-- **底部区域**: 3列网格布局 (`grid-cols-3`)
+- **底部区域**: `mt-auto` (自动推送到底部) + Flexbox 横向布局 (`flex items-end gap-4`)
+  - Positions Value: `flex-shrink-0` (固定宽度，不收缩)
+  - 按钮: `flex-1` (平分剩余空间)
 - **统计标签**: `text-text-secondary`, `text-xs`
 - **统计数值**: `text-text-primary`, `text-xl`, `font-bold`
 - **Deposit 按钮**:
   - 颜色: `bg-long hover:bg-long-hover text-black` (橙色背景，黑色文字)
-  - 尺寸: `px-4 py-2.5`, `w-full`
+  - 尺寸: `px-6 py-3`, `flex-1`
 - **Withdraw 按钮**:
   - 动态配色（根据余额状态）
     - 有余额 (>$0): `bg-short hover:bg-short-hover text-white` (紫色，Short 按钮配色)
     - 无余额 (=$0): `bg-bg-secondary hover:bg-bg-secondary/80 border border-border-primary text-text-primary` (深色次级按钮)
-  - 尺寸: `px-4 py-2.5`, `w-full`
+  - 尺寸: `px-6 py-3`, `flex-1`
 
 ---
 
@@ -263,41 +292,63 @@ interface UserProfileCardProps {
 
 显示用户的盈亏图表和数据。
 
+#### Props 定义
+
+```tsx
+interface ProfitLossChartProps {
+  profitLoss: string       // 盈亏金额（如 "$0.00" 或 "$1,240.50"）
+  period?: string          // 时间段（默认 "Past Month"）
+  isPositive?: boolean     // 是否盈利（默认 true）- 控制指示器颜色
+}
+```
+
+#### 组件文件位置
+- 主组件: `app/components/user/ProfitLossChart.tsx`
+- 时间筛选按钮: `app/components/user/TimeFilterButton.tsx`
+- 导出文件: `app/components/user/index.ts`
+
+#### 功能特性
+- **动态指示器颜色**: 根据 `isPositive` 属性显示绿色（盈利）或红色（亏损）圆点
+- **时间筛选**: 支持 1D, 1W, 1M, ALL 四种时间范围切换
+- **状态管理**: 使用 `useState` 管理当前选中的时间筛选器
+- **Polyplot 品牌标识**: 显示 Polyplot 图标和文字
+- **图表占位**: 预留图表区域，便于后续集成 Recharts 或 Chart.js
+
 #### 组件结构
 ```tsx
-<div className="bg-bg-card rounded-2xl border border-border-primary p-6">
+<div className="bg-bg-card rounded-2xl border border-border-primary p-4">
   {/* 头部区域 */}
-  <div className="flex justify-between items-start mb-6">
+  <div className="flex justify-between items-start mb-4">
     {/* 左侧：标题和数据 */}
     <div>
-      <div className="flex items-center gap-2 mb-2">
+      <div className="flex items-center gap-2 mb-1">
         <div className="w-2 h-2 bg-new rounded-full" />
         <h2 className="text-text-primary text-sm font-semibold">Profit/Loss</h2>
       </div>
-      <p className="text-text-primary text-4xl font-bold mb-1">$0.00</p>
-      <p className="text-text-secondary text-sm">Past Month</p>
+      <p className="text-text-primary text-3xl font-bold mb-1">$0.00</p>
+      <p className="text-text-secondary text-xs">Past Month</p>
     </div>
 
-    {/* 右侧：时间筛选和 Polymarket 标识 */}
-    <div className="flex flex-col items-end gap-3">
+    {/* 右侧：时间筛选和 Polyplot 标识 */}
+    <div className="flex flex-col items-end gap-2">
       {/* 时间筛选按钮组 */}
-      <div className="flex gap-2">
+      <div className="flex gap-1.5">
         <TimeFilterButton active={false}>1D</TimeFilterButton>
         <TimeFilterButton active={false}>1W</TimeFilterButton>
         <TimeFilterButton active={true}>1M</TimeFilterButton>
         <TimeFilterButton active={false}>ALL</TimeFilterButton>
       </div>
 
-      {/* Polymarket 标识 */}
-      <div className="flex items-center gap-2 text-text-tertiary">
-        <Layers className="w-4 h-4" />
-        <span className="text-sm">Polymarket</span>
+      {/* Polyplot 标识 */}
+      <div className="flex items-center gap-1.5 text-text-tertiary">
+        <Layers className="w-3.5 h-3.5" />
+        <span className="text-xs">Polyplot</span>
       </div>
     </div>
   </div>
 
   {/* 图表区域 */}
-  <div className="h-48 bg-gradient-to-b from-transparent via-bg-secondary to-bg-secondary rounded-lg">
+  <div className="h-36 bg-gradient-to-b from-transparent via-bg-secondary to-bg-secondary rounded-lg">
     {/* 图表内容 - 待集成图表库 */}
   </div>
 </div>
@@ -317,13 +368,20 @@ interface UserProfileCardProps {
 ```
 
 #### 样式规范
-- **卡片容器**: 与 UserProfileCard 一致
+- **卡片容器**: `bg-bg-card`, `rounded-2xl`, `border border-border-primary`, `p-4` (优化后尺寸)
+- **头部区域**: `mb-4` (缩小间距)
 - **标题指示器**: `w-2 h-2 bg-new rounded-full` (绿色圆点)
-- **金额显示**: `text-4xl`, `font-bold`, `text-text-primary`
+- **标题和数据间距**: `mb-1` (缩小间距)
+- **金额显示**: `text-3xl`, `font-bold`, `text-text-primary` (缩小字体)
+- **时间段文字**: `text-xs`, `text-text-secondary` (缩小字体)
 - **时间筛选按钮 (激活)**: `bg-long`, `text-black`
 - **时间筛选按钮 (未激活)**: `bg-bg-secondary`, `text-text-secondary`
-- **Polymarket 标识**: `text-text-tertiary`, `text-sm`
-- **图表容器**: `h-48`, 渐变背景从透明到 `bg-secondary`
+- **时间筛选按钮组**: `gap-1.5` (缩小间距)
+- **右侧区域间距**: `gap-2` (缩小间距)
+- **Polyplot 标识**: `text-text-tertiary`, `text-xs` (缩小字体)
+- **Polyplot 图标**: `w-3.5 h-3.5` (缩小尺寸)
+- **Polyplot 间距**: `gap-1.5` (缩小间距)
+- **图表容器**: `h-36`, 渐变背景从透明到 `bg-secondary` (缩小高度)
 
 ---
 
@@ -520,13 +578,27 @@ const hasBalance = () => {
 ## 图标使用
 
 ```tsx
-import { X, Layers, Search, ArrowUpDown } from 'lucide-react'
+import { Layers, Search, ArrowUpDown } from 'lucide-react'
 ```
 
-- **X**: Connect 按钮中的关闭图标
-- **Layers**: Polymarket 标识图标
+- **TwitterIcon**: Connect 按钮中的推特 (X) 官方 SVG 图标（自定义组件）
+- **Layers**: Polyplot 标识图标
 - **Search**: 搜索框图标
 - **ArrowUpDown**: 排序按钮图标
+
+### 推特图标组件
+```tsx
+const TwitterIcon = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+  >
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+)
+```
 
 ---
 

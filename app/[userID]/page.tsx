@@ -16,6 +16,7 @@ export default async function UserPage({ params }: UserPageProps) {
     joinDate: 'Jan 2026',
     views: 0,
     positionsValue: '$0.00',
+    profitLoss: '$0.00',
     isConnected: false
   }
 

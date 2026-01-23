@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import UserProfileCard from '@/app/components/user/UserProfileCard'
+import { UserProfileCard, ProfitLossChart } from '@/app/components/user'
 
 interface UserPageClientProps {
   userData: {
@@ -9,6 +9,7 @@ interface UserPageClientProps {
     joinDate: string
     views: number
     positionsValue: string
+    profitLoss: string
     isConnected: boolean
   }
 }
@@ -55,10 +56,12 @@ export default function UserPageClient({ userData }: UserPageClientProps) {
             onWithdraw={handleWithdraw}
           />
 
-          {/* 右侧：盈亏图表卡片 (待实现) */}
-          <div className="bg-bg-card rounded-2xl border border-border-primary p-6 flex items-center justify-center">
-            <p className="text-text-secondary">Profit/Loss Chart - Coming Soon</p>
-          </div>
+          {/* 右侧：盈亏图表卡片 */}
+          <ProfitLossChart
+            profitLoss={userData.profitLoss}
+            period="Past Month"
+            isPositive={parseFloat(userData.profitLoss.replace(/[$,]/g, '')) >= 0}
+          />
         </div>
 
         {/* Positions/Activity 区域 (待实现) */}
