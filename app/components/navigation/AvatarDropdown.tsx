@@ -139,7 +139,7 @@ export default function AvatarDropdown({
 
   const handleProfileClick = () => {
     if (username) {
-      router.push(`/${username}`);
+      router.push(`/@${username}`);
       handleClose();
     }
   };

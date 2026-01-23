@@ -24,8 +24,8 @@
   - 排序按钮（Positions: Value, Created: Date）
   - 表格布局和空状态 (2026-01-23 新增)
   - **Created 标签页：显示用户创建的 Narratives** (2026-01-23 新增)
-- **页面路由** (`app/[userID]/page.tsx` - 服务器组件)
-- **UserPageClient** 组件 (`app/[userID]/UserPageClient.tsx` - 客户端组件)
+- **页面路由** (`app/@[userID]/page.tsx` - 服务器组件)
+- **UserPageClient** 组件 (`app/@[userID]/UserPageClient.tsx` - 客户端组件)
   - 处理所有交互事件（Deposit, Withdraw, Connect）
 
 ### ⏳ 待实现
@@ -41,9 +41,9 @@
 
 为了符合 Next.js 15+ 的最佳实践，页面采用了服务器组件与客户端组件分离的架构：
 
-#### 服务器组件 (`app/[userID]/page.tsx`)
+#### 服务器组件 (`app/@[userID]/page.tsx`)
 - 负责数据获取（从 API 或数据库）
-- 处理路由参数
+- 处理路由参数（userID 从 URL `/@username` 中提取）
 - 将纯数据传递给客户端组件
 - 不包含任何事件处理器或交互逻辑
 
@@ -55,7 +55,9 @@ export default async function UserPage({ params }: UserPageProps) {
 }
 ```
 
-#### 客户端组件 (`app/[userID]/UserPageClient.tsx`)
+**注意**: 路由参数名为 `userID`，但 URL 格式为 `/@username`，Next.js 会自动解析 `@` 后面的部分作为参数值。
+
+#### 客户端组件 (`app/@[userID]/UserPageClient.tsx`)
 - 使用 `'use client'` 指令
 - 处理所有用户交互（点击事件、状态管理）
 - 接收来自服务器组件的数据作为 props
@@ -155,13 +157,14 @@ import { ProfitLossChart } from '@/app/components/user'
 />
 ```
 
-访问示例页面：`http://localhost:3000/crazyjjjj`
+访问示例页面：`http://localhost:3000/@crazyjjjj`
 
 ---
 
 ## 页面路由
-- **URL 格式**: `/[userID]`
-- **示例**: `/crazyjjjj`
+- **URL 格式**: `/@[userID]`
+- **示例**: `/@crazyjjjj`
+- **路由文件位置**: `app/@[userID]/page.tsx`
 
 ## 页面布局
 
