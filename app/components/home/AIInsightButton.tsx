@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Sparkles, ChevronDown, ChevronUp, Send, Bot, User } from 'lucide-react';
 import { useAuth } from '@/app/contexts/AuthContext';
 
@@ -29,6 +29,7 @@ export default function AIInsightButton() {
   // 管理渲染状态
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShouldRender(true);
       setIsClosing(false);
       // 清除任何待执行的关闭定时器
@@ -49,7 +50,7 @@ export default function AIInsightButton() {
   }, []);
 
   // 处理关闭动画
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     if (isClosing) return; // 防止重复触发
 
     setIsClosing(true);
@@ -66,7 +67,7 @@ export default function AIInsightButton() {
       setIsOpen(false);
       closeTimeoutRef.current = null;
     }, 200); // 与动画时长一致
-  };
+  }, [isClosing]);
 
   // 点击外部关闭
   useEffect(() => {
@@ -87,7 +88,7 @@ export default function AIInsightButton() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen, isClosing]);
+  }, [isOpen, isClosing, handleClose]);
 
   // 当 AI 回复完成时，自动滚动对话区域到底部(只影响对话框内部，不影响浏览器窗口)
   useEffect(() => {

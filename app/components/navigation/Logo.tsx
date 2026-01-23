@@ -14,7 +14,7 @@ export default function Logo() {
 
       {/* Brand Name */}
       <span className="text-2xl font-bold text-text-primary">
-        Narrative
+        Polyplot
       </span>
     </Link>
   );

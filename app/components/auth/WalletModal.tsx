@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 
 interface WalletModalProps {
   isOpen: boolean;
@@ -150,19 +151,19 @@ export default function WalletModal({ isOpen, onClose, onLoginSuccess }: WalletM
 
           {/* Terms and Privacy */}
           <div className="flex items-center justify-center gap-2 text-text-tertiary text-sm">
-            <a
+            <Link
               href="/terms"
               className="hover:text-text-primary transition-colors"
             >
               Terms
-            </a>
+            </Link>
             <span>•</span>
-            <a
+            <Link
               href="/privacy"
               className="hover:text-text-primary transition-colors"
             >
               Privacy
-            </a>
+            </Link>
           </div>
         </div>
       </div>
