@@ -106,7 +106,7 @@ export default function DepositModal({
           <div className="text-center">
             <h2 className="text-text-primary text-3xl font-bold mb-2">Deposit</h2>
             <p className="text-text-secondary text-base">
-              Polymarket Balance: <span className="text-text-primary font-semibold">${balance.toFixed(2)}</span>
+              Polyplot Balance: <span className="text-text-primary font-semibold">${balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </p>
           </div>
 
