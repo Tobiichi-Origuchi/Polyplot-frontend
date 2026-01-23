@@ -90,6 +90,7 @@ useEffect(() => {
 
 ## 快速使用
 
+### 示例 1: 无余额用户
 ```tsx
 import { UserProfileCard } from '@/app/components/user'
 
@@ -97,8 +98,22 @@ import { UserProfileCard } from '@/app/components/user'
   username="crazyjjjj"
   joinDate="Jan 2026"
   views={0}
-  positionsValue="$0.00"
+  positionsValue="$0.00"  // 无余额 - Withdraw 按钮显示为次级样式
   isConnected={false}
+  onConnectToggle={() => console.log('Connect toggled')}
+  onDeposit={() => console.log('Deposit clicked')}
+  onWithdraw={() => console.log('Withdraw clicked')}
+/>
+```
+
+### 示例 2: 有余额用户
+```tsx
+<UserProfileCard
+  username="trader_pro"
+  joinDate="Dec 2025"
+  views={1542}
+  positionsValue="$1,240.50"  // 有余额 - Withdraw 按钮显示为紫色（Short 配色）
+  isConnected={true}
   onConnectToggle={() => console.log('Connect toggled')}
   onDeposit={() => console.log('Deposit clicked')}
   onWithdraw={() => console.log('Withdraw clicked')}
@@ -237,7 +252,9 @@ interface UserProfileCardProps {
   - 颜色: `bg-long hover:bg-long-hover text-black` (橙色背景，黑色文字)
   - 尺寸: `px-4 py-2.5`, `w-full`
 - **Withdraw 按钮**:
-  - 颜色: `bg-bg-secondary hover:bg-bg-secondary/80 border border-border-primary text-text-primary`
+  - 动态配色（根据余额状态）
+    - 有余额 (>$0): `bg-short hover:bg-short-hover text-white` (紫色，Short 按钮配色)
+    - 无余额 (=$0): `bg-bg-secondary hover:bg-bg-secondary/80 border border-border-primary text-text-primary` (深色次级按钮)
   - 尺寸: `px-4 py-2.5`, `w-full`
 
 ---
@@ -456,6 +473,34 @@ interface UserProfileCardProps {
 ### Connect 按钮
 - 点击后可能切换为 "Connected" 或 "Following" 状态
 - 使用 `bg-short` → `bg-new` (紫色 → 绿色)
+
+### Withdraw 按钮动态样式
+根据用户的 Positions Value 自动切换样式：
+
+**有余额时** (`positionsValue > $0`):
+```tsx
+className="bg-short hover:bg-short-hover text-white"
+```
+- 使用 Short 按钮的紫色配色
+- 白色文字，醒目的提现提示
+
+**无余额时** (`positionsValue = $0`):
+```tsx
+className="bg-bg-secondary hover:bg-bg-secondary/80 border border-border-primary text-text-primary"
+```
+- 使用次级按钮样式
+- 深色背景，低调展示
+
+**实现逻辑**:
+```tsx
+const hasBalance = () => {
+  const numericValue = parseFloat(positionsValue.replace(/[$,]/g, ''))
+  return !isNaN(numericValue) && numericValue > 0
+}
+```
+- 移除 `$` 和 `,` 符号
+- 转换为数字并判断是否大于 0
+- 支持任意货币格式（如 "$1,240.50"）
 
 ### 时间筛选
 - 点击切换激活状态

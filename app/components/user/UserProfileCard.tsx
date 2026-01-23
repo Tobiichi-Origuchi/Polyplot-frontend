@@ -35,6 +35,12 @@ export default function UserProfileCard({
     onConnectToggle?.()
   }
 
+  // 解析 positionsValue 判断是否有余额
+  const hasBalance = () => {
+    const numericValue = parseFloat(positionsValue.replace(/[$,]/g, ''))
+    return !isNaN(numericValue) && numericValue > 0
+  }
+
   return (
     <div className="bg-bg-card rounded-2xl border border-border-primary p-6 relative">
       {/* Connect 按钮 - 固定在右上角 */}
@@ -95,7 +101,11 @@ export default function UserProfileCard({
         <div className="flex flex-col justify-end">
           <button
             onClick={onWithdraw}
-            className="bg-bg-secondary hover:bg-bg-secondary/80 border border-border-primary text-text-primary font-semibold px-4 py-2.5 rounded-lg transition-colors w-full"
+            className={`${
+              hasBalance()
+                ? 'bg-short hover:bg-short-hover text-white'
+                : 'bg-bg-secondary hover:bg-bg-secondary/80 border border-border-primary text-text-primary'
+            } font-semibold px-4 py-2.5 rounded-lg transition-colors w-full`}
           >
             Withdraw
           </button>
