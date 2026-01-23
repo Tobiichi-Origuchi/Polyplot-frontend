@@ -36,6 +36,8 @@ export default function Navigation() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     console.log('User logged out');
+    // 登出后自动跳转到首页
+    router.push('/');
   };
 
   return (
