@@ -1,0 +1,24 @@
+import UserPageClient from './UserPageClient'
+
+interface UserPageProps {
+  params: Promise<{
+    username: string
+  }>
+}
+
+export default async function UserPage({ params }: UserPageProps) {
+  const { username } = await params
+
+  // TODO: Fetch user data from API based on username
+  // For now, using mock data
+  const userData = {
+    username,
+    joinDate: 'Jan 2026',
+    views: 0,
+    positionsValue: '$0.00',
+    profitLoss: '$0.00',
+    isConnected: false
+  }
+
+  return <UserPageClient userData={userData} />
+}
