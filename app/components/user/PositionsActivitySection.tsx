@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Search, ArrowUpDown } from 'lucide-react'
+import { Search, ArrowUpDown, ExternalLink } from 'lucide-react'
 
 type Tab = 'positions' | 'activity' | 'created'
 type Status = 'active' | 'closed'
@@ -154,8 +154,148 @@ export default function PositionsActivitySection({}: PositionsActivitySectionPro
       {/* Activity 内容区 */}
       {activeTab === 'activity' && (
         <div className="bg-bg-card rounded-2xl border border-border-primary p-6">
-          <div className="py-20 text-center">
-            <p className="text-text-secondary text-sm">Activity - Coming Soon</p>
+          {/* 表头 */}
+          <div className="grid grid-cols-[120px_1fr_180px] gap-6 pb-4 mb-6 border-b border-border-primary">
+            <div className="text-text-tertiary text-xs font-semibold uppercase tracking-wide">
+              Type
+            </div>
+            <div className="text-text-tertiary text-xs font-semibold uppercase tracking-wide">
+              Market
+            </div>
+            <div className="text-text-tertiary text-xs font-semibold uppercase tracking-wide text-right">
+              Amount
+            </div>
+          </div>
+
+          {/* 活动列表 */}
+          <div className="space-y-6">
+            {/* Activity Item 1 - Buy */}
+            <div className="grid grid-cols-[120px_1fr_180px] gap-6 items-center">
+              {/* Type */}
+              <div className="text-text-primary font-medium">Buy</div>
+
+              {/* Market */}
+              <div className="flex items-center gap-3">
+                {/* Icon */}
+                <div className="w-12 h-12 rounded-xl bg-long flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">$</span>
+                </div>
+
+                {/* Market Info */}
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-text-primary font-medium text-base mb-1 truncate">
+                    Will Bitcoin dip to $85,000 in January?
+                  </h4>
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="bg-short text-white px-2 py-0.5 rounded font-semibold">
+                      No 73¢
+                    </span>
+                    <span className="text-text-secondary">1.4 shares</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Amount */}
+              <div className="text-right">
+                <div className="text-text-primary text-xl font-bold mb-1">$1.04</div>
+                <button className="text-text-tertiary text-sm hover:text-text-primary transition-colors inline-flex items-center gap-1">
+                  13 hours ago
+                  <ExternalLink className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+
+            {/* Activity Item 2 - Sell */}
+            <div className="grid grid-cols-[120px_1fr_180px] gap-6 items-center">
+              {/* Type */}
+              <div className="text-text-primary font-medium">Sell</div>
+
+              {/* Market */}
+              <div className="flex items-center gap-3">
+                {/* Icon */}
+                <div className="w-12 h-12 rounded-xl bg-short flex items-center justify-center flex-shrink-0">
+                  <svg
+                    className="w-6 h-6 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="2" fill="none" />
+                    <path d="M12 6v6l4 2" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" />
+                  </svg>
+                </div>
+
+                {/* Market Info */}
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-text-primary font-medium text-base mb-1 truncate">
+                    Will a SpaceX Starship launch reach orbit in February?
+                  </h4>
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="bg-short text-white px-2 py-0.5 rounded font-semibold">
+                      Yes 45¢
+                    </span>
+                    <span className="text-text-secondary">100.0 shares</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Amount */}
+              <div className="text-right">
+                <div className="text-text-primary text-xl font-bold mb-1">$45.00</div>
+                <button className="text-text-tertiary text-sm hover:text-text-primary transition-colors inline-flex items-center gap-1">
+                  1 day ago
+                  <ExternalLink className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+
+            {/* Activity Item 3 - Buy */}
+            <div className="grid grid-cols-[120px_1fr_180px] gap-6 items-center">
+              {/* Type */}
+              <div className="text-text-primary font-medium">Buy</div>
+
+              {/* Market */}
+              <div className="flex items-center gap-3">
+                {/* Icon */}
+                <div className="w-12 h-12 rounded-xl bg-bg-secondary flex items-center justify-center flex-shrink-0">
+                  <svg
+                    className="w-6 h-6 text-text-primary"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                  </svg>
+                </div>
+
+                {/* Market Info */}
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-text-primary font-medium text-base mb-1 truncate">
+                    Will &apos;Oppenheimer&apos; win Best Picture at the Oscars?
+                  </h4>
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="bg-short text-white px-2 py-0.5 rounded font-semibold">
+                      Yes 92¢
+                    </span>
+                    <span className="text-text-secondary">500.0 shares</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Amount */}
+              <div className="text-right">
+                <div className="text-text-primary text-xl font-bold mb-1">$460.00</div>
+                <button className="text-text-tertiary text-sm hover:text-text-primary transition-colors inline-flex items-center gap-1">
+                  3 days ago
+                  <ExternalLink className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* End of Results */}
+          <div className="mt-12 pt-8 border-t border-border-primary">
+            <p className="text-text-tertiary text-sm text-center uppercase tracking-wider">
+              End of Results
+            </p>
           </div>
         </div>
       )}

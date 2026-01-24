@@ -12,7 +12,6 @@ interface UserPageClientProps {
     positionsValue: string
     biggestWin: string
     profitLoss: string
-    isConnected: boolean
   }
 }
 
@@ -45,7 +44,6 @@ export default function UserPageClient({ userData }: UserPageClientProps) {
             views={userData.views}
             positionsValue={userData.positionsValue}
             biggestWin={userData.biggestWin}
-            isConnected={userData.isConnected}
           />
 
           {/* 右侧：盈亏图表卡片 */}

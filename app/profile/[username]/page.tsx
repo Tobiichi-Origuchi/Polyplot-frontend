@@ -18,8 +18,7 @@ export default async function UserPage({ params }: UserPageProps) {
     views: 0,
     positionsValue: '$0.00',
     biggestWin: '$0.00',
-    profitLoss: '$0.00',
-    isConnected: false
+    profitLoss: '$0.00'
   }
 
   return <UserPageClient userData={userData} />
