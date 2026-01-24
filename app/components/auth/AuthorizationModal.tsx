@@ -21,7 +21,6 @@ export default function AuthorizationModal({
 
   // 管理步骤的状态
   const [tradingStatus, setTradingStatus] = useState<'pending' | 'signing' | 'complete'>('pending')
-  const [tokensStatus, setTokensStatus] = useState<'pending' | 'signing' | 'complete'>('pending')
 
   // 管理渲染状态和背景滚动
   useEffect(() => {
@@ -75,16 +74,7 @@ export default function AuthorizationModal({
     // TODO: 实现实际的签名逻辑
     setTimeout(() => {
       setTradingStatus('complete')
-    }, 1500)
-  }
-
-  // 处理 Approve Tokens 签名
-  const handleApproveTokens = () => {
-    setTokensStatus('signing')
-    // TODO: 实现实际的签名逻辑
-    setTimeout(() => {
-      setTokensStatus('complete')
-      // 所有步骤完成后，关闭弹窗并执行回调
+      // 签名完成后，关闭弹窗并执行回调
       if (onComplete) {
         onComplete()
       }
@@ -110,7 +100,7 @@ export default function AuthorizationModal({
 
       {/* Modal */}
       <div
-        className={`relative z-10 w-full max-w-3xl mx-4 ${
+        className={`relative z-10 w-full max-w-lg mx-4 ${
           isClosing
             ? 'animate-[modal-slide-out_0.2s_ease-in-out]'
             : 'animate-[modal-slide-in_0.3s_cubic-bezier(0.34,1.56,0.64,1)]'
@@ -118,100 +108,49 @@ export default function AuthorizationModal({
       >
         <div className="bg-bg-card rounded-2xl border border-border-primary shadow-2xl">
           {/* Header */}
-          <div className="relative border-b border-border-primary px-8 py-6">
-            <h2 className="text-text-primary text-3xl font-bold">Finish Setting Up</h2>
+          <div className="relative border-b border-border-primary px-6 py-5">
+            <h2 className="text-text-primary text-2xl font-bold text-center">Finish Setting Up</h2>
 
             {/* Close Button */}
             <button
               onClick={handleClose}
-              className="absolute top-6 right-6 text-text-tertiary hover:text-text-primary transition-colors"
+              className="absolute top-5 right-5 text-text-tertiary hover:text-text-primary transition-colors"
             >
-              <X size={28} />
+              <X size={24} />
             </button>
           </div>
 
-          {/* Steps Content */}
-          <div className="p-8 space-y-4">
-            {/* Step 1: Deploy Proxy Wallet */}
-            <div className="bg-bg-secondary/50 rounded-xl p-6 border border-border-primary">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1">
-                  <h3 className="text-text-primary text-xl font-bold mb-2">
-                    Deploy Proxy Wallet
-                  </h3>
-                  <p className="text-text-secondary text-sm leading-relaxed">
-                    Deploy Proxy Wallet and kinmure firewt your proxy wallet novehannes, learn more.
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 bg-long px-4 py-2 rounded-lg">
-                  <Check size={18} className="text-black" />
-                  <span className="text-black font-bold text-sm">Complete</span>
-                </div>
-              </div>
+          {/* Content */}
+          <div className="p-6">
+            <div className="text-center mb-6">
+              <h3 className="text-text-primary text-xl font-bold mb-2">
+                Enable Trading
+              </h3>
+              <p className="text-text-secondary text-sm leading-relaxed">
+                Enable trading to allow you to annove at the Material design.
+              </p>
             </div>
 
-            {/* Step 2: Enable Trading */}
-            <div className="bg-bg-secondary/50 rounded-xl p-6 border border-border-primary">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1">
-                  <h3 className="text-text-primary text-xl font-bold mb-2">
-                    Enable Trading
-                  </h3>
-                  <p className="text-text-secondary text-sm leading-relaxed">
-                    Enable trading to allow you to annove at the Material design.
-                  </p>
+            {/* Action Button */}
+            <div className="flex justify-center">
+              {tradingStatus === 'complete' ? (
+                <div className="flex items-center gap-2 bg-long px-6 py-3 rounded-lg">
+                  <Check size={20} className="text-black" />
+                  <span className="text-black font-bold">Complete</span>
                 </div>
-                {tradingStatus === 'complete' ? (
-                  <div className="flex items-center gap-2 bg-long px-4 py-2 rounded-lg">
-                    <Check size={18} className="text-black" />
-                    <span className="text-black font-bold text-sm">Complete</span>
-                  </div>
-                ) : (
-                  <button
-                    onClick={handleEnableTrading}
-                    disabled={tradingStatus === 'signing'}
-                    className={`px-8 py-2.5 rounded-lg font-bold text-sm transition-all ${
-                      tradingStatus === 'signing'
-                        ? 'bg-long/50 text-black/50 cursor-not-allowed'
-                        : 'bg-long hover:bg-long-hover text-black'
-                    }`}
-                  >
-                    {tradingStatus === 'signing' ? 'Signing...' : 'Sign'}
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {/* Step 3: Approve Tokens */}
-            <div className="bg-bg-secondary/50 rounded-xl p-6 border border-border-primary">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1">
-                  <h3 className="text-text-primary text-xl font-bold mb-2">
-                    Approve Tokens
-                  </h3>
-                  <p className="text-text-secondary text-sm leading-relaxed">
-                    Approve tokens to ersare tnount tokens in:boken appkeatone.
-                  </p>
-                </div>
-                {tokensStatus === 'complete' ? (
-                  <div className="flex items-center gap-2 bg-short px-4 py-2 rounded-lg">
-                    <Check size={18} className="text-white" />
-                    <span className="text-white font-bold text-sm">Complete</span>
-                  </div>
-                ) : (
-                  <button
-                    onClick={handleApproveTokens}
-                    disabled={tokensStatus === 'signing' || tradingStatus !== 'complete'}
-                    className={`px-8 py-2.5 rounded-lg font-bold text-sm transition-all ${
-                      tokensStatus === 'signing' || tradingStatus !== 'complete'
-                        ? 'bg-short/50 text-white/50 cursor-not-allowed'
-                        : 'bg-short hover:bg-short-hover text-white'
-                    }`}
-                  >
-                    {tokensStatus === 'signing' ? 'Signing...' : 'Sign'}
-                  </button>
-                )}
-              </div>
+              ) : (
+                <button
+                  onClick={handleEnableTrading}
+                  disabled={tradingStatus === 'signing'}
+                  className={`px-12 py-3 rounded-lg font-bold transition-all ${
+                    tradingStatus === 'signing'
+                      ? 'bg-long/50 text-black/50 cursor-not-allowed'
+                      : 'bg-long hover:bg-long-hover text-black'
+                  }`}
+                >
+                  {tradingStatus === 'signing' ? 'Signing...' : 'Sign'}
+                </button>
+              )}
             </div>
           </div>
         </div>
