@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Sparkles, ChevronDown, ChevronUp, Send, Bot, User } from 'lucide-react';
-import { useAuth } from '@/app/contexts/AuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface Message {
   id: string;

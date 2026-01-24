@@ -6,8 +6,8 @@ import { ThumbsUp, ThumbsDown, TrendingUp, X } from 'lucide-react';
 import Image from 'next/image';
 import CategoryBadge from './CategoryBadge';
 import StatusBadge from './StatusBadge';
-import { useAuth } from '@/app/contexts/AuthContext';
-import AuthorizationModal from '@/app/components/auth/AuthorizationModal';
+import { useAuth } from '@/contexts/AuthContext';
+import AuthorizationModal from '@/components/auth/AuthorizationModal';
 
 export interface NarrativeCardProps {
   id: string;

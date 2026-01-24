@@ -10,7 +10,7 @@ import UserAvatar from './UserAvatar';
 import ThemeToggle from './ThemeToggle';
 import WalletModal from '../auth/WalletModal';
 import DepositModal from '../deposit/DepositModal';
-import { useAuth } from '@/app/contexts/AuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Navigation() {
   const { isLoggedIn, setIsLoggedIn, openLoginModal, closeLoginModal, isLoginModalOpen } = useAuth();

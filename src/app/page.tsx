@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import CategoryFilter from './components/home/CategoryFilter';
-import AIInsightButton from './components/home/AIInsightButton';
-import NarrativeCard, { NarrativeCardProps } from './components/home/NarrativeCard';
+import CategoryFilter from '@/components/home/CategoryFilter';
+import AIInsightButton from '@/components/home/AIInsightButton';
+import NarrativeCard, { NarrativeCardProps } from '@/components/home/NarrativeCard';
 
 // 模拟市场数据
 const mockMarkets: NarrativeCardProps[] = [

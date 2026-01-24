@@ -2,12 +2,12 @@
 
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useMemo } from 'react'
-import Breadcrumb from '@/app/components/narrative/Breadcrumb'
-import NarrativeHeader from '@/app/components/narrative/NarrativeHeader'
-import PriceHistoryCard from '@/app/components/narrative/PriceHistoryCard'
-import BundleComposition from '@/app/components/narrative/BundleComposition'
-import TradingPanel from '@/app/components/narrative/TradingPanel'
-import { getNarrativeById } from '@/app/data/mockNarratives'
+import Breadcrumb from '@/components/narrative/Breadcrumb'
+import NarrativeHeader from '@/components/narrative/NarrativeHeader'
+import PriceHistoryCard from '@/components/narrative/PriceHistoryCard'
+import BundleComposition from '@/components/narrative/BundleComposition'
+import TradingPanel from '@/components/narrative/TradingPanel'
+import { getNarrativeById } from '@/data/mockNarratives'
 
 export default function NarrativeDetailPage() {
   const params = useParams()

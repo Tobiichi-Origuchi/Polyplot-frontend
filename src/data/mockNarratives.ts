@@ -1,4 +1,4 @@
-import { BundleComponent } from '@/app/components/narrative/BundleComposition'
+import { BundleComponent } from '@/components/narrative/BundleComposition'
 
 export interface NarrativeDetail {
   id: string

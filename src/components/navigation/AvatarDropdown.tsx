@@ -8,7 +8,7 @@ interface AvatarDropdownProps {
   isOpen: boolean;
   onClose: () => void;
   onLogout: () => void;
-  avatarRef: RefObject<HTMLButtonElement>;
+  avatarRef: RefObject<HTMLButtonElement | null>;
   username?: string;
   walletAddress?: string;
 }
