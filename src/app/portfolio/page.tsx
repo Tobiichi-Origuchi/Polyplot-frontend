@@ -1,12 +1,12 @@
 'use client'
 
 import { Bitcoin, Cpu, Music, Trophy, Film } from 'lucide-react'
-import PortfolioHeader from '../components/portfolio/PortfolioHeader'
-import StatsCardsContainer from '../components/portfolio/StatsCardsContainer'
-import ActivePositionsSection from '../components/portfolio/ActivePositionsSection'
-import SettledPositionsSection from '../components/portfolio/SettledPositionsSection'
-import { ActivePosition } from '../components/portfolio/ActivePositionRow'
-import { SettledPosition } from '../components/portfolio/SettledPositionRow'
+import PortfolioHeader from '@/components/portfolio/PortfolioHeader'
+import StatsCardsContainer from '@/components/portfolio/StatsCardsContainer'
+import ActivePositionsSection from '@/components/portfolio/ActivePositionsSection'
+import SettledPositionsSection from '@/components/portfolio/SettledPositionsSection'
+import { ActivePosition } from '@/components/portfolio/ActivePositionRow'
+import { SettledPosition } from '@/components/portfolio/SettledPositionRow'
 
 export default function PortfolioPage() {
   // 示例数据 - Active Positions

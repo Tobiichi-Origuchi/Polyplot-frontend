@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { UserProfileCard, ProfitLossChart, PositionsActivitySection } from '@/app/components/user'
+import { UserProfileCard, ProfitLossChart, PositionsActivitySection } from '@/components/user'
 
 interface UserPageClientProps {
   userData: {

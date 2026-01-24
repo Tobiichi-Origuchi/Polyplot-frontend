@@ -1,11 +1,11 @@
 'use client'
 
-import Breadcrumb from '@/app/components/narrative/Breadcrumb'
-import NarrativeHeader from '@/app/components/narrative/NarrativeHeader'
-import PriceHistoryCard from '@/app/components/narrative/PriceHistoryCard'
-import BundleComposition from '@/app/components/narrative/BundleComposition'
-import TradingPanel from '@/app/components/narrative/TradingPanel'
-import type { BundleComponent } from '@/app/components/narrative/BundleComposition'
+import Breadcrumb from '@/components/narrative/Breadcrumb'
+import NarrativeHeader from '@/components/narrative/NarrativeHeader'
+import PriceHistoryCard from '@/components/narrative/PriceHistoryCard'
+import BundleComposition from '@/components/narrative/BundleComposition'
+import TradingPanel from '@/components/narrative/TradingPanel'
+import type { BundleComponent } from '@/components/narrative/BundleComposition'
 
 export default function NarrativeTestPage() {
   // 模拟数据

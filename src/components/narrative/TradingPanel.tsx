@@ -5,8 +5,8 @@ import PriceDisplay from './PriceDisplay'
 import AmountInput from './AmountInput'
 import PercentageButtons from './PercentageButtons'
 import TradeInfo from './TradeInfo'
-import AuthorizationModal from '@/app/components/auth/AuthorizationModal'
-import { useAuth } from '@/app/contexts/AuthContext'
+import AuthorizationModal from '@/components/auth/AuthorizationModal'
+import { useAuth } from '@/contexts/AuthContext'
 
 interface TradingPanelProps {
   currentPrice: number
