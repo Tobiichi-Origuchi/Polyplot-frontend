@@ -1,5 +1,3 @@
-'use client'
-
 import Breadcrumb from '@/components/narrative/Breadcrumb'
 import NarrativeHeader from '@/components/narrative/NarrativeHeader'
 import PriceHistoryCard from '@/components/narrative/PriceHistoryCard'
