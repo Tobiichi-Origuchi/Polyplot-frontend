@@ -96,6 +96,25 @@ export default function NarrativeCard({
     setAmount(prev => Math.min(prev + value, 1000));
   };
 
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/[^0-9]/g, ''); // 只允许数字
+    if (value === '') {
+      setAmount(0);
+      return;
+    }
+    const numValue = parseInt(value, 10);
+    if (!isNaN(numValue)) {
+      setAmount(Math.min(Math.max(numValue, 1), 1000)); // 限制在 1-1000 范围内
+    }
+  };
+
+  const handleAmountBlur = () => {
+    // 失焦时确保至少为 1
+    if (amount < 1) {
+      setAmount(1);
+    }
+  };
+
   // 模拟数据
   const currentPrice = (tradeType === 'long' ? basePriceLong : basePriceShort).toFixed(2);
   const potentialProfit = (amount * 0.15).toFixed(2);
@@ -230,24 +249,40 @@ export default function NarrativeCard({
                 </span>
               </div>
 
-              {/* 金额输入行：金额显示、快捷按钮、滑块 */}
+              {/* 金额输入行：金额输入框、快捷按钮、滑块 */}
               <div className="flex gap-3 mb-4">
-                {/* 金额显示和快捷按钮合并 - 60% 宽度 */}
-                <div className="w-[60%] bg-bg-secondary border border-border-primary rounded-xl px-4 py-3 flex items-center justify-between">
-                  <span className="text-text-primary text-xl font-bold">
-                    $ {amount}
-                  </span>
+                {/* 金额输入框和快捷按钮合并 - 60% 宽度 */}
+                <div className="w-[60%] bg-bg-secondary border border-border-primary rounded-xl px-4 py-3 flex items-center justify-between gap-3 focus-within:border-long/50 transition-colors">
+                  <div
+                    className="flex items-center gap-2 flex-1 min-w-0 cursor-text"
+                    onClick={(e) => {
+                      // 点击容器时聚焦输入框
+                      const input = e.currentTarget.querySelector('input');
+                      input?.focus();
+                    }}
+                  >
+                    <span className="text-text-primary text-xl font-bold">$</span>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={amount}
+                      onChange={handleAmountChange}
+                      onBlur={handleAmountBlur}
+                      className="bg-transparent text-text-primary text-xl font-bold outline-none w-full min-w-0"
+                      placeholder="100"
+                    />
+                  </div>
                   {/* 快捷按钮 */}
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 shrink-0">
                     <button
                       onClick={() => handleQuickAdd(1)}
-                      className="bg-bg-primary hover:bg-bg-card text-text-primary font-semibold px-2.5 py-1 rounded-md transition-colors text-sm"
+                      className="bg-bg-primary hover:bg-bg-card text-text-primary font-semibold px-2.5 py-1 rounded-md transition-colors text-sm whitespace-nowrap"
                     >
                       +1
                     </button>
                     <button
                       onClick={() => handleQuickAdd(10)}
-                      className="bg-bg-primary hover:bg-bg-card text-text-primary font-semibold px-2.5 py-1 rounded-md transition-colors text-sm"
+                      className="bg-bg-primary hover:bg-bg-card text-text-primary font-semibold px-2.5 py-1 rounded-md transition-colors text-sm whitespace-nowrap"
                     >
                       +10
                     </button>
