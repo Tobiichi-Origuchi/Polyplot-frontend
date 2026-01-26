@@ -3,14 +3,14 @@
  * 基于后端 API 文档: /api/v1/users
  */
 
-import { get, post, put, setToken, RequestConfig } from '@/utils/request';
+import { get, post, put, setToken, RequestConfig } from "@/utils/request";
 
 // ==================== 类型定义 ====================
 
 /**
  * 用户角色
  */
-export type UserRole = 'user' | 'kol' | 'admin';
+export type UserRole = "user" | "kol" | "admin";
 
 /**
  * 用户信息响应
@@ -38,10 +38,10 @@ export interface LoginResponse {
  * 更新用户资料请求
  */
 export interface UpdateProfileRequest {
-  username?: string;       // 3-50 字符，仅字母数字下划线，唯一
-  display_name?: string;   // 最大 100 字符
-  avatar_url?: string;     // URL 字符串
-  bio?: string;            // 最大 500 字符
+  username?: string; // 3-50 字符，仅字母数字下划线，唯一
+  display_name?: string; // 最大 100 字符
+  avatar_url?: string; // URL 字符串
+  bio?: string; // 最大 500 字符
 }
 
 // ==================== API 方法 ====================
@@ -63,13 +63,17 @@ export interface UpdateProfileRequest {
  */
 export const loginWithSiwe = async (
   message: string,
-  signature: string
+  signature: string,
 ): Promise<LoginResponse> => {
   const config: RequestConfig = {
     siweAuth: { message, signature },
   };
 
-  const response = await post<LoginResponse>('/api/v1/users', undefined, config);
+  const response = await post<LoginResponse>(
+    "/api/v1/users",
+    undefined,
+    config,
+  );
 
   // 自动保存 token
   if (response.data.token) {
@@ -91,7 +95,7 @@ export const loginWithSiwe = async (
  * ```
  */
 export const getCurrentUser = async (): Promise<UserResponse> => {
-  const response = await get<UserResponse>('/api/v1/users/me');
+  const response = await get<UserResponse>("/api/v1/users/me");
   return response.data;
 };
 
@@ -132,9 +136,9 @@ export const getUserById = async (userId: number): Promise<UserResponse> => {
  * ```
  */
 export const updateProfile = async (
-  data: UpdateProfileRequest
+  data: UpdateProfileRequest,
 ): Promise<UserResponse> => {
-  const response = await put<UserResponse>('/api/v1/users/me', data);
+  const response = await put<UserResponse>("/api/v1/users/me", data);
   return response.data;
 };
 

@@ -3,9 +3,9 @@
  * 展示如何在前端组件中调用用户 API
  */
 
-import { SiweMessage } from 'siwe';
-import userApi from './user';
-import { getToken, removeToken } from '@/utils/request';
+import { SiweMessage } from "siwe";
+import userApi from "./user";
+import { getToken, removeToken } from "@/utils/request";
 
 // ==================== 示例 1: 用户首次登录 (SIWE 签名) ====================
 
@@ -24,9 +24,9 @@ export async function handleSiweLogin(walletAddress: string) {
     const message = new SiweMessage({
       domain: window.location.host,
       address: walletAddress,
-      statement: 'Sign in with Ethereum',
+      statement: "Sign in with Ethereum",
       uri: window.location.origin,
-      version: '1',
+      version: "1",
       chainId: 137, // Polygon Mainnet
       nonce: Math.floor(Math.random() * 100000000).toString(),
     });
@@ -35,7 +35,7 @@ export async function handleSiweLogin(walletAddress: string) {
 
     // Step 2: 请求用户签名 (使用 MetaMask 或其他钱包)
     const signature = await (window as any).ethereum.request({
-      method: 'personal_sign',
+      method: "personal_sign",
       params: [messageString, walletAddress],
     });
 
@@ -43,24 +43,24 @@ export async function handleSiweLogin(walletAddress: string) {
     const loginData = await userApi.loginWithSiwe(messageString, signature);
 
     // Step 4: 处理登录结果
-    console.log('Login successful!');
-    console.log('User ID:', loginData.user.id);
-    console.log('Wallet:', loginData.user.wallet_address);
-    console.log('Smart Account:', loginData.user.smart_account_address);
-    console.log('Token saved to localStorage');
+    console.log("Login successful!");
+    console.log("User ID:", loginData.user.id);
+    console.log("Wallet:", loginData.user.wallet_address);
+    console.log("Smart Account:", loginData.user.smart_account_address);
+    console.log("Token saved to localStorage");
 
     // 返回用户信息
     return loginData.user;
   } catch (error: any) {
-    console.error('SIWE login failed:', error);
+    console.error("SIWE login failed:", error);
 
     // 处理不同的错误
     if (error.status === 401) {
-      throw new Error('Signature verification failed. Please try again.');
-    } else if (error.code === 'NETWORK_ERROR') {
-      throw new Error('Network error. Please check your connection.');
+      throw new Error("Signature verification failed. Please try again.");
+    } else if (error.code === "NETWORK_ERROR") {
+      throw new Error("Network error. Please check your connection.");
     } else {
-      throw new Error('Login failed. Please try again.');
+      throw new Error("Login failed. Please try again.");
     }
   }
 }
@@ -74,13 +74,13 @@ export async function fetchCurrentUser() {
   try {
     const user = await userApi.getCurrentUser();
 
-    console.log('Current user:', user);
+    console.log("Current user:", user);
     return user;
   } catch (error: any) {
-    console.error('Failed to fetch current user:', error);
+    console.error("Failed to fetch current user:", error);
 
     if (error.status === 401) {
-      console.log('Token expired, please login again');
+      console.log("Token expired, please login again");
       removeToken(); // 清除过期 token
       // 重定向到登录页
       // window.location.href = '/login';
@@ -99,16 +99,16 @@ export async function fetchUserProfile(userId: number) {
   try {
     const user = await userApi.getUserById(userId);
 
-    console.log('User profile:', user);
-    console.log('Username:', user.username || 'Not set');
-    console.log('Display name:', user.display_name || 'Not set');
+    console.log("User profile:", user);
+    console.log("Username:", user.username || "Not set");
+    console.log("Display name:", user.display_name || "Not set");
 
     return user;
   } catch (error: any) {
-    console.error('Failed to fetch user profile:', error);
+    console.error("Failed to fetch user profile:", error);
 
     if (error.status === 404) {
-      throw new Error('User not found');
+      throw new Error("User not found");
     }
 
     throw error;
@@ -129,27 +129,27 @@ export async function updateUserProfile(profileData: {
   try {
     const updatedUser = await userApi.updateProfile(profileData);
 
-    console.log('Profile updated successfully:', updatedUser);
+    console.log("Profile updated successfully:", updatedUser);
     return updatedUser;
   } catch (error: any) {
-    console.error('Failed to update profile:', error);
+    console.error("Failed to update profile:", error);
 
     // 处理验证错误
     if (error.status === 400 && error.details) {
       const validationErrors = error.details
         .map((d: any) => `${d.field}: ${d.message}`)
-        .join('\n');
+        .join("\n");
       throw new Error(`Validation failed:\n${validationErrors}`);
     }
 
     // 处理 username 冲突
     if (error.status === 409) {
-      throw new Error('Username already taken. Please choose another one.');
+      throw new Error("Username already taken. Please choose another one.");
     }
 
     // 处理认证错误
     if (error.status === 401) {
-      throw new Error('Please login again to update your profile.');
+      throw new Error("Please login again to update your profile.");
     }
 
     throw error;
@@ -171,7 +171,7 @@ export function isUserLoggedIn(): boolean {
  */
 export function logout() {
   removeToken();
-  console.log('User logged out');
+  console.log("User logged out");
   // 可选：重定向到首页
   // window.location.href = '/';
 }
@@ -248,48 +248,48 @@ export function logout() {
  */
 export function handleApiError(error: any): string {
   // 网络错误
-  if (error.code === 'NETWORK_ERROR') {
-    return 'Network error. Please check your internet connection.';
+  if (error.code === "NETWORK_ERROR") {
+    return "Network error. Please check your internet connection.";
   }
 
   // 超时错误
-  if (error.code === 'TIMEOUT') {
-    return 'Request timeout. Please try again.';
+  if (error.code === "TIMEOUT") {
+    return "Request timeout. Please try again.";
   }
 
   // 认证错误
   if (error.status === 401) {
     removeToken();
-    return 'Session expired. Please login again.';
+    return "Session expired. Please login again.";
   }
 
   // 权限错误
   if (error.status === 403) {
-    return 'Permission denied.';
+    return "Permission denied.";
   }
 
   // 资源不存在
   if (error.status === 404) {
-    return 'Resource not found.';
+    return "Resource not found.";
   }
 
   // 验证错误
   if (error.status === 400 && error.details) {
-    return error.details.map((d: any) => d.message).join(', ');
+    return error.details.map((d: any) => d.message).join(", ");
   }
 
   // 冲突错误
   if (error.status === 409) {
-    return error.message || 'Conflict error.';
+    return error.message || "Conflict error.";
   }
 
   // 服务器错误
   if (error.status >= 500) {
-    return 'Server error. Please try again later.';
+    return "Server error. Please try again later.";
   }
 
   // 默认错误消息
-  return error.message || 'An unexpected error occurred.';
+  return error.message || "An unexpected error occurred.";
 }
 
 // ==================== 监听 Token 过期事件 ====================
@@ -299,10 +299,10 @@ export function handleApiError(error: any): string {
  * 当检测到 401 错误时，自动触发此事件
  */
 export function setupTokenExpirationListener() {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
-  window.addEventListener('auth:token-expired', () => {
-    console.log('Token expired, redirecting to login...');
+  window.addEventListener("auth:token-expired", () => {
+    console.log("Token expired, redirecting to login...");
     // 重定向到登录页或显示登录弹窗
     // window.location.href = '/login';
   });
