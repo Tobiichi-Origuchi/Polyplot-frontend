@@ -1,5 +1,3 @@
-'use client'
-
 import { Bitcoin, Cpu, Music, Trophy, Film } from 'lucide-react'
 import PortfolioHeader from '@/components/portfolio/PortfolioHeader'
 import StatsCardsContainer from '@/components/portfolio/StatsCardsContainer'

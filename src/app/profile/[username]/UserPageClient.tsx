@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
 import { UserProfileCard, ProfitLossChart, PositionsActivitySection } from '@/components/user'
 
 interface UserPageClientProps {
@@ -16,21 +15,6 @@ interface UserPageClientProps {
 }
 
 export default function UserPageClient({ userData }: UserPageClientProps) {
-  // 确保页面加载时滚动到顶部
-  useEffect(() => {
-    // 立即滚动到顶部
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-    document.documentElement.scrollTop = 0
-    document.body.scrollTop = 0
-
-    // 在渲染完成后再次确保滚动位置
-    const timer = setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-    }, 0)
-
-    return () => clearTimeout(timer)
-  }, [userData.username]) // 当用户名改变时也重置滚动
-
   return (
     <div className="min-h-screen bg-bg-primary">
       <main className="max-w-7xl mx-auto px-6 py-8">

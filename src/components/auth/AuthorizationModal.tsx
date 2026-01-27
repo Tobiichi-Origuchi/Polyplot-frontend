@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { X, Check } from 'lucide-react'
+import LoadingSpinner from './LoadingSpinner'
 
 interface AuthorizationModalProps {
   isOpen: boolean
@@ -133,7 +134,15 @@ export default function AuthorizationModal({
 
             {/* Action Button */}
             <div className="flex justify-center">
-              {tradingStatus === 'complete' ? (
+              {tradingStatus === 'signing' ? (
+                <div className="py-8">
+                  <LoadingSpinner
+                    size="md"
+                    message="Waiting for signature..."
+                    variant="long"
+                  />
+                </div>
+              ) : tradingStatus === 'complete' ? (
                 <div className="flex items-center gap-2 bg-long px-6 py-3 rounded-lg">
                   <Check size={20} className="text-black" />
                   <span className="text-black font-bold">Complete</span>
@@ -141,14 +150,9 @@ export default function AuthorizationModal({
               ) : (
                 <button
                   onClick={handleEnableTrading}
-                  disabled={tradingStatus === 'signing'}
-                  className={`px-12 py-3 rounded-lg font-bold transition-all ${
-                    tradingStatus === 'signing'
-                      ? 'bg-long/50 text-black/50 cursor-not-allowed'
-                      : 'bg-long hover:bg-long-hover text-black'
-                  }`}
+                  className="bg-long hover:bg-long-hover text-black px-12 py-3 rounded-lg font-bold transition-all"
                 >
-                  {tradingStatus === 'signing' ? 'Signing...' : 'Sign'}
+                  Sign
                 </button>
               )}
             </div>
