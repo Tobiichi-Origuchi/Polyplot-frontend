@@ -4,7 +4,7 @@
  */
 
 import { SiweMessage } from "siwe";
-import userApi from "./user";
+// import userApi from "./user"; // 已注释，用于测试 UI 交互流程
 import { getToken, removeToken } from "@/utils/request";
 
 // ==================== 示例 1: 用户首次登录 (SIWE 签名) ====================
@@ -34,23 +34,36 @@ export async function handleSiweLogin(walletAddress: string) {
     const messageString = message.prepareMessage();
 
     // Step 2: 请求用户签名 (使用 MetaMask 或其他钱包)
-    const signature = await (window as any).ethereum.request({
-      method: "personal_sign",
-      params: [messageString, walletAddress],
-    });
+    // ========== 已注释，用于测试 UI 交互流程 ==========
+    // const signature = await (window as any).ethereum.request({
+    //   method: "personal_sign",
+    //   params: [messageString, walletAddress],
+    // });
+    console.log("模拟签名（签名已禁用）", messageString);
 
     // Step 3: 调用登录 API
-    const loginData = await userApi.loginWithSiwe(messageString, signature);
+    // ========== API 调用已注释，用于测试 UI 交互流程 ==========
+    // const loginData = await userApi.loginWithSiwe(messageString, signature);
+    // console.log("Login successful!");
+    // console.log("User ID:", loginData.user.id);
+    // console.log("Wallet:", loginData.user.wallet_address);
+    // console.log("Smart Account:", loginData.user.smart_account_address);
+    // console.log("Token saved to localStorage");
+    // return loginData.user;
 
-    // Step 4: 处理登录结果
-    console.log("Login successful!");
-    console.log("User ID:", loginData.user.id);
-    console.log("Wallet:", loginData.user.wallet_address);
-    console.log("Smart Account:", loginData.user.smart_account_address);
-    console.log("Token saved to localStorage");
-
-    // 返回用户信息
-    return loginData.user;
+    // 模拟返回，用于测试
+    console.log("模拟登录成功（API 调用已禁用）");
+    return {
+      id: 1,
+      wallet_address: walletAddress,
+      smart_account_address: null,
+      role: 'user' as const,
+      username: null,
+      display_name: null,
+      avatar_url: null,
+      bio: null
+    };
+    // ========================================================
   } catch (error: any) {
     console.error("SIWE login failed:", error);
 
@@ -72,10 +85,24 @@ export async function handleSiweLogin(walletAddress: string) {
  */
 export async function fetchCurrentUser() {
   try {
-    const user = await userApi.getCurrentUser();
+    // ========== API 调用已注释，用于测试 UI 交互流程 ==========
+    // const user = await userApi.getCurrentUser();
+    // console.log("Current user:", user);
+    // return user;
 
-    console.log("Current user:", user);
-    return user;
+    // 模拟返回，用于测试
+    console.log("模拟获取当前用户（API 调用已禁用）");
+    return {
+      id: 1,
+      wallet_address: '0x...',
+      smart_account_address: null,
+      role: 'user' as const,
+      username: null,
+      display_name: null,
+      avatar_url: null,
+      bio: null
+    };
+    // ========================================================
   } catch (error: any) {
     console.error("Failed to fetch current user:", error);
 
@@ -97,13 +124,30 @@ export async function fetchCurrentUser() {
  */
 export async function fetchUserProfile(userId: number) {
   try {
-    const user = await userApi.getUserById(userId);
+    // ========== API 调用已注释，用于测试 UI 交互流程 ==========
+    // const user = await userApi.getUserById(userId);
+    // console.log("User profile:", user);
+    // console.log("Username:", user.username || "Not set");
+    // console.log("Display name:", user.display_name || "Not set");
+    // return user;
 
+    // 模拟返回，用于测试
+    console.log("模拟获取用户资料（API 调用已禁用）", userId);
+    const user = {
+      id: userId,
+      wallet_address: '0x...',
+      smart_account_address: null,
+      role: 'user' as const,
+      username: 'test_user',
+      display_name: 'Test User',
+      avatar_url: null,
+      bio: 'This is a test user'
+    };
     console.log("User profile:", user);
     console.log("Username:", user.username || "Not set");
     console.log("Display name:", user.display_name || "Not set");
-
     return user;
+    // ========================================================
   } catch (error: any) {
     console.error("Failed to fetch user profile:", error);
 
@@ -127,10 +171,24 @@ export async function updateUserProfile(profileData: {
   bio?: string;
 }) {
   try {
-    const updatedUser = await userApi.updateProfile(profileData);
+    // ========== API 调用已注释，用于测试 UI 交互流程 ==========
+    // const updatedUser = await userApi.updateProfile(profileData);
+    // console.log("Profile updated successfully:", updatedUser);
+    // return updatedUser;
 
-    console.log("Profile updated successfully:", updatedUser);
-    return updatedUser;
+    // 模拟返回，用于测试
+    console.log("模拟更新用户资料（API 调用已禁用）", profileData);
+    return {
+      id: 1,
+      wallet_address: '0x...',
+      smart_account_address: null,
+      role: 'user' as const,
+      username: profileData.username || null,
+      display_name: profileData.display_name || null,
+      avatar_url: profileData.avatar_url || null,
+      bio: profileData.bio || null
+    };
+    // ========================================================
   } catch (error: any) {
     console.error("Failed to update profile:", error);
 

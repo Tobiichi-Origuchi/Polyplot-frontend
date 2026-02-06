@@ -6,6 +6,12 @@ interface UserPageProps {
   }>
 }
 
+export async function generateStaticParams() {
+  return [
+    { username: 'demo' }
+  ]
+}
+
 export default async function UserPage({ params }: UserPageProps) {
   const { username } = await params
 

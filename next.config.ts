@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: 'export',
+  basePath: process.env.NODE_ENV === 'production' ? '/Polyplot-frontend' : '',
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -12,14 +15,6 @@ const nextConfig: NextConfig = {
         hostname: 'i.pravatar.cc',
       },
     ],
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/@:username',
-        destination: '/profile/:username',
-      },
-    ];
   },
 };
 

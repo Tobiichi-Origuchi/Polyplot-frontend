@@ -29,8 +29,46 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Deploy to GitHub Pages
+
+This project is configured to automatically deploy to GitHub Pages when you push to the `main` branch.
+
+### Initial Setup
+
+1. Go to your repository settings on GitHub
+2. Navigate to **Settings** → **Pages**
+3. Under **Build and deployment**, select:
+   - Source: **GitHub Actions**
+4. Push your code to the `main` branch
+
+The deployment will happen automatically via GitHub Actions.
+
+### Accessing Your Deployed Site
+
+After deployment, your site will be available at:
+```
+https://polyplot-xyz.github.io/Polyplot-frontend/
+```
+
+### Local Build Testing
+
+To test the static export locally:
+
+```bash
+npm run build
+npx serve@latest out
+```
+
+### Custom Domain (Optional)
+
+If you want to use a custom domain:
+
+1. Create a `CNAME` file in the `public` directory with your domain
+2. Configure your DNS settings to point to GitHub Pages
+3. Update `basePath` in `next.config.ts` to an empty string
+
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Alternatively, you can deploy to Vercel by removing the `output: 'export'` line from `next.config.ts`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

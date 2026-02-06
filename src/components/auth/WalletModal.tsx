@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { SiweMessage } from 'siwe';
 import { getAddress } from 'viem';
-import userApi from '@/utils/api/user';
+// import userApi from '@/utils/api/user'; // 已注释，用于测试 UI 交互流程
 import { handleApiError } from '@/utils/api/examples';
 import LoadingSpinner from './LoadingSpinner';
 
@@ -102,7 +102,7 @@ export default function WalletModal({ isOpen, onClose, onLoginSuccess }: WalletM
       console.log('请求连接钱包...');
       const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts',
-      });
+      }) as string[];
       console.log('获取到的账户:', accounts);
 
       if (!accounts || accounts.length === 0) {
@@ -111,7 +111,7 @@ export default function WalletModal({ isOpen, onClose, onLoginSuccess }: WalletM
 
       // 将地址转换为 EIP-55 格式（校验和格式）
       console.log('原始地址:', accounts[0]);
-      const walletAddress = getAddress(accounts[0]);
+      const walletAddress = getAddress(accounts[0] as `0x${string}`);
       console.log('EIP-55 格式地址:', walletAddress);
 
       // Step 2: 生成 SIWE 消息
@@ -147,10 +147,15 @@ export default function WalletModal({ isOpen, onClose, onLoginSuccess }: WalletM
       console.log('调用登录 API...');
       console.log('API Base URL:', process.env.NEXT_PUBLIC_API_BASE_URL);
 
-      const loginData = await userApi.loginWithSiwe(messageString, signature);
+      // ========== API 调用已注释，用于测试 UI 交互流程 ==========
+      // const loginData = await userApi.loginWithSiwe(messageString, signature);
+      // console.log('登录成功!');
+      // console.log('用户数据:', loginData);
 
-      console.log('登录成功!');
-      console.log('用户数据:', loginData);
+      // 模拟延迟，测试 UI 交互
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log('模拟登录成功（API 调用已禁用）');
+      // ========================================================
 
       // Step 5: 登录成功，关闭弹窗
       setIsLoading(false);

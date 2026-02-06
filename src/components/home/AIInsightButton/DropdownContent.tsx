@@ -9,8 +9,8 @@ interface DropdownContentProps {
   message: string;
   isTyping: boolean;
   isClosing: boolean;
-  messagesContainerRef: React.RefObject<HTMLDivElement>;
-  inputContainerRef: React.RefObject<HTMLDivElement>;
+  messagesContainerRef: React.RefObject<HTMLDivElement | null>;
+  inputContainerRef: React.RefObject<HTMLDivElement | null>;
   onMessageChange: (value: string) => void;
   onSendMessage: () => void;
   onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
