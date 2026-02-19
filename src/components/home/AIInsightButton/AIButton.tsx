@@ -20,7 +20,7 @@ const AIButton = forwardRef<HTMLButtonElement, AIButtonProps>(
 
         <div className="flex items-center gap-3 relative z-10">
           <Sparkles className="w-5 h-5 text-long group-hover:text-long-hover group-hover:scale-110 transition-all duration-300" />
-          <span className="text-text-primary group-hover:text-white font-semibold text-lg transition-colors duration-300">
+          <span className="text-text-primary group-hover:text-text font-semibold text-lg transition-colors duration-300">
             AI Insight
           </span>
         </div>
