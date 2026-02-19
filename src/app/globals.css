@@ -84,6 +84,35 @@ body {
   display: none;  /* Chrome, Safari and Opera */
 }
 
+/* 滚动条 */
+.scrollbar-hover {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent; /* Firefox: thumb track */
+  transition: scrollbar-color 0.3s ease;
+}
+
+.scrollbar-hover:hover {
+  scrollbar-color: var(--border-secondary) transparent; /* Firefox */
+}
+
+.scrollbar-hover::-webkit-scrollbar {
+  height: 6px; /* Horizontal scrollbar height */
+  width: 6px; /* Vertical scrollbar width */
+}
+
+.scrollbar-hover::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-hover::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 20px;
+}
+
+.scrollbar-hover:hover::-webkit-scrollbar-thumb {
+  background-color: var(--border-secondary);
+}
+
 /* 自定义滑块样式 */
 input[type="range"]::-webkit-slider-thumb {
   appearance: none;

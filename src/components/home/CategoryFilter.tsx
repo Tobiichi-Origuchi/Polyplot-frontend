@@ -35,7 +35,7 @@ export default function CategoryFilter({
   };
 
   return (
-    <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+    <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hover">
       {categories.map((category) => {
         const Icon = category.icon;
         const isActive = activeCategory === category.id;
