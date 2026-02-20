@@ -2,21 +2,19 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies:
+
+```bash
+npm ci
+```
+
+Next, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
@@ -47,14 +45,16 @@ The deployment will happen automatically via GitHub Actions.
 
 After deployment, your site will be available at:
 ```
-https://polyplot-xyz.github.io/Polyplot-frontend/
+https://<your-github-username>.github.io/Polyplot-frontend/
 ```
+Replace `<your-github-username>` with your actual GitHub username.
 
 ### Local Build Testing
 
 To test the static export locally:
 
 ```bash
+npm ci
 npm run build
 npx serve@latest out
 ```
