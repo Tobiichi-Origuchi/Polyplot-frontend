@@ -50,7 +50,7 @@
 - **样式特点**:
   - 圆角按钮: `rounded-full`
   - 过渡动画: `transition-all`
-  - 横向滚动: `overflow-x-auto` + `scrollbar-hide`
+  - 横向滚动: `overflow-x-auto` + `scrollbar-hover`
   - 按钮间距: `gap-3`
   - 按钮内边距: `px-6 py-3`
 

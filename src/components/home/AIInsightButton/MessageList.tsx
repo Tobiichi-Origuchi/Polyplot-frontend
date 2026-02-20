@@ -14,7 +14,7 @@ const MessageList = forwardRef<HTMLDivElement, MessageListProps>(
 
     return (
       <>
-        <div ref={ref} className="flex-1 overflow-y-auto p-5 space-y-3 scrollbar-hide">
+        <div ref={ref} className="flex-1 overflow-y-auto p-5 space-y-3 scrollbar-hover">
           {messages.map((msg) => (
             <MessageBubble key={msg.id} message={msg} />
           ))}
